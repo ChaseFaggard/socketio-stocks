@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment'
 })
 export class StockService {
 
-  private socket: Socket = io(environment.production ? '' : 'http://localhost:8080')
+  private socket: Socket = io(environment.production ? 'https://socketio-livestocks.herokuapp.com/' : 'http://localhost:8080')
 
   constructor() { }
 
