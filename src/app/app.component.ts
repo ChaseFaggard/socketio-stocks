@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { async } from '@angular/core/testing';
-import { StockService } from './stock.service';
+import { StockService } from './services/stock.service';
 
 @Component({
   selector: 'app-root',

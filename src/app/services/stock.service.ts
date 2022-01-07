@@ -36,15 +36,11 @@ export class StockService {
   }
 
   public getResponseType = async (requestType: string): Promise<Object> => {
-    const response = await this.asyncEmit('requestType', requestType)
-    console.log('Response: ' + JSON.stringify(response))
-    return response
+    return await this.asyncEmit('requestType', requestType)
   }
 
   public getData = async (request: {'request-type': string, symbols?: string[], start?: string}): Promise<Object> => {
     return await this.asyncEmit('getData', request)
   }
-
-
 
 }

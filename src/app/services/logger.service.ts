@@ -8,7 +8,7 @@ export class LoggerService {
 
   private logs: string[] = [] // List of all logs
 
-  private logInProduction = false // Set to true if you want console logs in production
+  private logInProduction: boolean = false // Set to true if you want console logs in production
 
   constructor() { }
 
