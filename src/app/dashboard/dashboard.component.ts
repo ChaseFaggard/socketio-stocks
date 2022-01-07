@@ -9,23 +9,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class DashboardComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router) { 
-
     const page = route.snapshot.paramMap.get("page")
-
-    switch(page) {
-      case 'home':
-        break
-      case 'account':
-        break
-      case 'settings':
-        break
-      default:
-        this.router.navigate(['page-not-found'])
-    }
-
+    if(page == null || page == 'home') { }
+    else if(page == 'account') { }
+    else if(page == 'settings') { }
+    else this.router.navigate(['page-not-found'])
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
 }

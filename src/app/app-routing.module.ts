@@ -10,12 +10,12 @@ import { NotFoundComponent } from './notfound/notfound.component';
 import { LoginGuard } from './loginactivate.guard';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
-  {path: 'dashboard', component: DashboardComponent, canActivate:[LoginGuard]},
-  {path: 'dashboard/:page', component: DashboardComponent, canActivate:[LoginGuard]},
-  {path: 'login', component: LoginComponent},
-  {path: '**', redirectTo: 'page-not-found'},
-  {path: 'page-not-found', component: NotFoundComponent}
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: 'dashboard', component: DashboardComponent, canActivate:[LoginGuard] },
+  { path: 'dashboard/:page', component: DashboardComponent, canActivate:[LoginGuard] },
+  { path: 'login', component: LoginComponent },
+  { path: '**', redirectTo: 'page-not-found' },
+  { path: 'page-not-found', component: NotFoundComponent }
 ];
 
 @NgModule({
