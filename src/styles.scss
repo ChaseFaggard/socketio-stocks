@@ -1,1 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+    /* Mode variables */
+    --light-bg: white;
+    --light-text: black;
+    --dark-bg: rgb(41, 39, 39);
+    --dark-text: white;
+    --mode-bg: var(--light-bg);
+    --mode-text: var(--light-text);
+    /* Mode variables */
+
+    /* Theme variables */
+    --purple: purple;
+    --orange: orange;
+    --green: green;
+
+    --theme-color: var(--purple);
+    /* Theme variables */ 
+}
+
+.mode-light { 
+    --mode-bg: var(--light-bg); 
+    --mode-text: var(--light-text);
+}
+.mode-dark { 
+    --mode-bg: var(--dark-bg); 
+    --mode-text: var(--dark-text); 
+}
+
+.theme-orange { --theme-color: var(--orange); }
+.theme-purple { --theme-color: var(--purple); }
+.theme-green { --theme-color: var(--green); }

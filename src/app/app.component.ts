@@ -33,11 +33,6 @@ export class AppComponent {
     console.log(response)
   }
 
-  getResponse = async (requestType: string) => {
-    const response = await this.stockService.getResponseType(requestType)
-    console.log(response)
-  }
-
   getLatency = async () => {
     const ping = await this.stockService.getLatency()
     console.log(`Latency: ${ping}ms`)

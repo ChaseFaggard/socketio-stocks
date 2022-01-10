@@ -35,10 +35,6 @@ export class StockService {
     return new Date().getTime() - startTime
   }
 
-  public getResponseType = async (requestType: string): Promise<Object> => {
-    return await this.asyncEmit('requestType', requestType)
-  }
-
   public getData = async (request: {'request-type': string, symbols?: string[], start?: string}): Promise<Object> => {
     return await this.asyncEmit('getData', request)
   }

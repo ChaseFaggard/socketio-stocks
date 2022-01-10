@@ -9,6 +9,7 @@ import { NotFoundComponent } from './notfound/notfound.component';
 import { HomeComponent } from './dashboard/home/home.component';
 import { AccountComponent } from './dashboard/account/account.component';
 import { SettingsComponent } from './dashboard/settings/settings.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { SettingsComponent } from './dashboard/settings/settings.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
