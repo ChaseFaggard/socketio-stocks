@@ -10,7 +10,9 @@ export class StockService {
 
   private socket: Socket = io(environment.production ? 'https://socketio-livestocks.herokuapp.com/' : 'http://localhost:8080')
 
-  constructor() { }
+  constructor() {
+
+   }
 
   public asyncEmit = (eventName: string, data?: any): Promise<any> => {
     return new Promise((resolve, reject) => {
@@ -35,8 +37,20 @@ export class StockService {
     return new Date().getTime() - startTime
   }
 
-  public getData = async (request: {'request-type': string, symbols?: string[], start?: string}): Promise<Object> => {
-    return await this.asyncEmit('getData', request)
+  public requestData = (request: {'request-type': string, symbols?: string[], start?: string}): void => {
+    this.socket.emit('getData', request)
+  }
+
+  public liveData = (): Observable<Object> => {
+    return new Observable<Object>((observer:any) => {
+      this.socket.on('liveData', (data:object) => {
+        observer.next(data)
+      })
+    })
+  }
+
+  public newInterval = (interval:number) => {
+    this.socket.emit('changeInterval', interval)
   }
 
 }
