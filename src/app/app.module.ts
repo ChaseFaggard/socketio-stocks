@@ -11,6 +11,10 @@ import { AccountComponent } from './dashboard/account/account.component';
 import { SettingsComponent } from './dashboard/settings/settings.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { ReactiveFormsModule } from '@angular/forms';
+
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import { GoogleLoginProvider } from 'angularx-social-login';
 
 @NgModule({
   declarations: [
@@ -27,9 +31,26 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     AppRoutingModule,
     FormsModule,
     FontAwesomeModule,
-    InputSwitchModule
+    InputSwitchModule,
+    ReactiveFormsModule,
+    SocialLoginModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '1087485042004-qng81mtuk9hjl1d5hffvklm6t7olbvt5.apps.googleusercontent.com'
+            )
+          }
+        ]
+      } as SocialAuthServiceConfig,
+    }  
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
