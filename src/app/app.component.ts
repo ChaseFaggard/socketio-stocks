@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { async } from '@angular/core/testing';
+import { LoggerService } from './services/logger.service';
 import { StockService } from './services/stock.service';
 
 @Component({
@@ -10,27 +11,14 @@ import { StockService } from './services/stock.service';
 export class AppComponent {
   title = 'client';
 
-  constructor(private stockService: StockService) { 
+  constructor(private stockService: StockService, private logger: LoggerService) { 
 
-    setInterval(this.getLatency, 1000)
+    this.stockService.newInterval(10, ['NBR', 'ABC'])
 
-    this.getData()
-
-  }
-
-  getData = async () => {
-     let response: Object = await this.stockService.getData({
-       'request-type': 'list'
-     })
-
-     console.log(response)
-
-     response = await this.stockService.getData({
-      'request-type': 'live',
-      symbols: ['ABC']
+    this.stockService.liveData().subscribe((data: Object) => {
+      logger.log(data)
     })
 
-    console.log(response)
   }
 
   getLatency = async () => {

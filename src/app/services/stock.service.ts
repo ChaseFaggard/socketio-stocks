@@ -37,8 +37,16 @@ export class StockService {
     return new Date().getTime() - startTime
   }
 
-  public requestData = (request: {'request-type': string, symbols?: string[], start?: string}): void => {
-    this.socket.emit('getData', request)
+  public requestLive = (tickers: string[]) => {
+    this.socket.emit('startLive', tickers)
+  }
+
+  public requestHistorical = async (request: { tickers: string[], startData: string }): Promise<Object> => {
+    return this.asyncEmit('historicalData', request)
+  }
+
+  public requestList = async (): Promise<String[]> => {
+    return this.asyncEmit('listData')
   }
 
   public liveData = (): Observable<Object> => {
@@ -49,8 +57,9 @@ export class StockService {
     })
   }
 
-  public newInterval = (interval:number) => {
+  public newInterval = (interval:number, tickers: string[]) => {
     this.socket.emit('changeInterval', interval)
+    this.requestLive(tickers)
   }
 
 }

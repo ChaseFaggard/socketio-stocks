@@ -12,7 +12,7 @@ export class LoggerService {
 
   constructor() { }
 
-  log = (message: string): void => {
+  log = (message: any): void => {
     if(environment.production == false || this.logInProduction == true) console.log(message)
     this.logs.push(message)
   }
