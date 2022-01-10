@@ -1,5 +1,7 @@
 <div class="container" [ngClass]="darkMode ? 'mode-dark' : 'mode-light'">
-    <div class="title"></div>
+    <div class="title">
+        <h1>Stonks</h1>
+    </div>
     <div class="header">
         <div>
 
@@ -7,15 +9,23 @@
     </div>
     <div class="nav">
         <nav>
-            <li>
+            <li routerLink="/dashboard/home" [routerLinkActive]="['active']">
                 <fa-icon [icon]="faHome"></fa-icon>
                 <h3>Home</h3>
             </li>
+            <li routerLink="/dashboard/account" [routerLinkActive]="['active']">
+                <fa-icon [icon]="faUserCircle"></fa-icon>
+                <h3>Account</h3>
+            </li>
+            <li routerLink="/dashboard/settings" [routerLinkActive]="['active']">
+                <fa-icon [icon]="faCog"></fa-icon>
+                <h3>Settings</h3>
+            </li>
         </nav>
     </div>
-    <div class="body">
+    <div class="body"> 
         <div>
-
+            <router-outlet></router-outlet>
         </div>
     </div>
 </div>

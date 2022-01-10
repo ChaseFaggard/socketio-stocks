@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 
-import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faUserCircle, faCog } from '@fortawesome/free-solid-svg-icons';
+import { ThemeService } from '../services/theme.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,15 +13,17 @@ export class DashboardComponent implements OnInit {
   public darkMode: boolean = false
 
   public faHome = faHome
+  public faUserCircle = faUserCircle
+  public faCog = faCog
 
-  constructor(private route: ActivatedRoute, private router: Router) { 
-    const page = route.snapshot.paramMap.get("page")
-    if(page == null || page == 'home') { }
-    else if(page == 'account') { }
-    else if(page == 'settings') { }
-    else this.router.navigate(['page-not-found'])
+  constructor(private themeService: ThemeService) { 
+    themeService.darkMode.subscribe((darkMode: boolean) => {
+      this.darkMode = darkMode
+    })
   }
 
   ngOnInit(): void { }
+
+  toggleMode = (event: any) => this.darkMode = event.detail
 
 }

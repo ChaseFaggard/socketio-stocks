@@ -7,26 +7,36 @@
     --dark-text: white;
     --mode-bg: var(--light-bg);
     --mode-text: var(--light-text);
+    --mode-nav: grey;
     /* Mode variables */
 
     /* Theme variables */
-    --purple: purple;
+    --purple: 129, 117, 255;
     --orange: orange;
     --green: green;
 
-    --theme-color: var(--purple);
+    --theme-color-rgb: var(--purple);
+    --theme-color: rgb(var(--purple));
+    --theme-color-light: rgba(var(--theme-color-rgb), 0.15)
+    
     /* Theme variables */ 
 }
 
 .mode-light { 
     --mode-bg: var(--light-bg); 
     --mode-text: var(--light-text);
+    --mode-nav: grey;
 }
 .mode-dark { 
     --mode-bg: var(--dark-bg); 
     --mode-text: var(--dark-text); 
+    --mode-nav: white;
 }
 
 .theme-orange { --theme-color: var(--orange); }
 .theme-purple { --theme-color: var(--purple); }
 .theme-green { --theme-color: var(--green); }
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
