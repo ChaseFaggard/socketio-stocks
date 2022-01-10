@@ -1,5 +1,6 @@
 $margin: 20px;
 $border-radius: 15px;
+$bufferHeight: 200px;
 $tablet: 1100px;
 
 
@@ -38,12 +39,32 @@ $tablet: 1100px;
             width: calc(100% - $margin*2);
             height: calc(100% - $margin);
             margin: auto;
-            background: rgb(199, 199, 199);
+            background: rgba(var(--theme-color-rgb), .5);
             border-radius: $border-radius $border-radius 0 0;
             bottom: 0;
             left: 50%;
             position: absolute;
             transform: translateX(-50%);
+            display: flex;
+            justify-content: right;
+            align-items: center;
+            fa-icon {
+                color: var(--theme-color);
+                background: white;
+                border-radius: 50%;
+                font-size: 27px;
+                width: 40px;
+                height: 40px;
+                text-align: center;
+                line-height: 40px;
+                margin: 0;
+            }
+            img {
+                width: 40px;
+                height: 40px;
+                border-radius: 50px;
+                margin: 0 15px;
+            }
         }
     }
     .nav {
@@ -82,13 +103,31 @@ $tablet: 1100px;
             width: calc(100% - $margin*2);
             height: calc(100% - $margin);
             margin: auto;
-            background: #f7f7f7;
             border-radius: 0 0 $border-radius $border-radius;
             top: 0;
             left: 50%;
             position: absolute;
             transform: translateX(-50%);  
             color: black;
+            span {
+                width: 100%;
+                height: $bufferHeight;
+                background: rgba(var(--theme-color-rgb), .5);
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+            .content {
+                width: 100%;
+                height: calc(100% - $bufferHeight);
+                margin-top: $bufferHeight;
+                background: #f1f1f1;
+                div {
+                    width: 100%;
+                    height: calc(100% + $bufferHeight);
+                    margin-top: -$bufferHeight;
+                }
+            }
         }
     }
 

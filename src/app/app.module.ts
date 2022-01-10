@@ -10,11 +10,17 @@ import { HomeComponent } from './dashboard/home/home.component';
 import { AccountComponent } from './dashboard/account/account.component';
 import { SettingsComponent } from './dashboard/settings/settings.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { InputSwitchModule } from 'primeng/inputswitch';
-import { ReactiveFormsModule } from '@angular/forms';
 
+/* PrimeNG Modules */
+import { InputSwitchModule } from 'primeng/inputswitch';
+import {MenuModule} from 'primeng/menu';
+import { ButtonModule } from 'primeng/button';
+import { RippleModule } from 'primeng/ripple';
+
+import { ReactiveFormsModule } from '@angular/forms';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
+import { LoginGuard } from './loginactivate.guard';
 
 @NgModule({
   declarations: [
@@ -33,13 +39,16 @@ import { GoogleLoginProvider } from 'angularx-social-login';
     FontAwesomeModule,
     InputSwitchModule,
     ReactiveFormsModule,
-    SocialLoginModule
+    SocialLoginModule,
+    MenuModule,
+    ButtonModule,
+    RippleModule
   ],
   providers: [
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
-        autoLogin: false,
+        autoLogin: true,
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,
@@ -49,7 +58,8 @@ import { GoogleLoginProvider } from 'angularx-social-login';
           }
         ]
       } as SocialAuthServiceConfig,
-    }  
+    },
+    LoginGuard  
   ],
   bootstrap: [AppComponent]
 })
