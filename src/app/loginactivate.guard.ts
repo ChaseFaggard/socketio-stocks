@@ -14,6 +14,7 @@ export class LoginGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
     this.socialAuthService.authState.subscribe((user: SocialUser) => {
+      console.log(user);
       if(user == null) this.router.navigate(['login'])
     })
     
