@@ -1,6 +1,6 @@
 $margin: 20px;
 $border-radius: 15px;
-$bufferHeight: 200px;
+$bufferHeight: 150px;
 $tablet: 1100px;
 
 
@@ -153,33 +153,38 @@ $tablet: 1100px;
                 }
             }
         }
-        div {
+        .main {
             width: calc(100% - $margin);
             height: calc(100% - $margin);
-            border-radius: 0 0 $border-radius $border-radius;
             top: 0;
             left: calc(50% - $margin / 2);
             position: absolute;
             transform: translateX(-50%);  
             color: black;
-            span {
-                width: 100%;
-                height: $bufferHeight;
-                background: rgba(var(--theme-color-rgb), .5);
-                position: absolute;
-                top: 0;
-                left: 0;
-            }
             .content {
                 width: calc(100%);
-                margin-left: calc($margin / 2);
                 height: calc(100% - $bufferHeight);
                 margin-top: $bufferHeight;
                 background: #f0f1f5;
-                div {
+                border-radius: 0 0 $border-radius $border-radius;
+                .component {
                     width: 100%;
-                    height: calc(100% + $bufferHeight);
-                    margin-top: -$bufferHeight;
+                    height: calc(100%);
+                    margin-top: $bufferHeight;
+                    .page {
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        top: 0;
+                    }
+                }
+                span {
+                    width: 100%;
+                    height: $bufferHeight;
+                    background: rgba(var(--theme-color-rgb), .5);
+                    position: absolute;
+                    top: 0;
+                    left: 0;
                 }
             }
         }

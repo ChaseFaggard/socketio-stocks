@@ -42,8 +42,7 @@ export class DashboardComponent implements OnInit {
     
   }
 
-  ngOnInit(): void {
-   }
+  ngOnInit(): void { }
 
   toggleMode = (event: any) => this.darkMode = event.detail
 
