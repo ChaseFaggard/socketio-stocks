@@ -3,21 +3,22 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../interfaces/User';
 import { LoggerService } from './logger.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DatabaseService {
 
-  public user:User = {
+  public user:BehaviorSubject<User> = new BehaviorSubject<User>({
     displayName: '',
     id: '',
     email: '',
-    theme: '',
+    theme: 'theme-purple',
     darkMode: false,
-    tickInterval: 0,
+    tickInterval: 1,
     tickers: []
-  }
+  })
 
   headers = {
     headers: {
@@ -32,7 +33,7 @@ export class DatabaseService {
 
   public async setUser(id:string){
     const users = await this.getUsers();
-    this.user = users.find(item => item.id === id)!
+    this.user.next(users.find(item => item.id === id)!)
   }
 
   public accessDatabase() {
@@ -62,12 +63,16 @@ export class DatabaseService {
     return users;
   }
 
-  public async updateUser(id:string, param:string, newValue:string|string[]|boolean){
-    this.logger.log(`Updating id ${id}'s ${param} parameter with new value ${newValue}`)
+  public async updateUser(param: string, newValue: any) {
+    
+    let currentUser: User = this.user.value;
+    (currentUser as any)[param] = newValue
+    this.user.next(currentUser)
+    this.logger.log(`Updating id ${currentUser.id}'s ${param} parameter with new value ${newValue}`)
     let data = {
       "table" : "stonks",
       "record" : {
-        "id" : id,
+        "id" : currentUser.id,
         [param] : newValue,
       }
     }

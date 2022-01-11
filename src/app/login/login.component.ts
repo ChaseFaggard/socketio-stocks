@@ -30,28 +30,27 @@ export class LoginComponent implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required]
     });    
-    
-    this.socialAuthService.authState.subscribe((user: SocialUser) => {
-      this.socialUser = user;
-      this.isLoggedin = (user != null)
-      if(this.isLoggedin) this.router.navigate(['dashboard/home'])
-    })
   }
 
-  loginWithGoogle = ():void => {
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
-    .then(async (user:SocialUser) => {
-      this.logger.log(`Checking for user: ${user.firstName} with email ${user.email} and id ${user.id}`)
-      const result = await this.dbService.checkUser(user.id)
-      if(result == true)
-        this.logger.log('user found')
-      else
-      {
-        this.logger.log('User not found. Adding to database...')
-        await this.dbService.generateUser(user.id, user.firstName, user.email)
-      }
-    })
-    .then(() => this.router.navigate(['dashboard/home']))
+  loginWithGoogle = async () => {
+
+    const user:SocialUser = await this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
+
+    this.socialUser = user;
+    this.isLoggedin = (user != null)
+
+    this.logger.log(`Checking for user: ${user.firstName} with email ${user.email} and id ${user.id}`)
+
+    const userExist:boolean = await this.dbService.checkUser(user.id)
+
+    if(userExist) this.logger.log('user found')
+    else {
+      this.logger.log('User not found. Adding to database...')
+      await this.dbService.generateUser(user.id, user.firstName, user.email)
+    }
+    
+    this.router.navigate(['dashboard/home'])
+
   }
 
   logOut = (): void => { this.socialAuthService.signOut() }

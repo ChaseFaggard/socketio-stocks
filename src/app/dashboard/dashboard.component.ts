@@ -16,6 +16,7 @@ export class DashboardComponent implements OnInit {
   public user: SocialUser = new SocialUser
 
   public darkMode: boolean = false
+  public theme: string = 'theme-purple'
 
   public faHome = faHome
   public faUserCircle = faUserCircle
@@ -26,32 +27,25 @@ export class DashboardComponent implements OnInit {
   public accountPopup:boolean = false
 
   constructor(private themeService: ThemeService, private socialService: SocialAuthService, private dbService:DatabaseService ) { 
+    themeService.darkMode.subscribe((darkMode: boolean) => this.darkMode = darkMode)
+    themeService.theme.subscribe((theme: string) => this.theme = theme)
+  }
 
-    themeService.darkMode.subscribe((darkMode: boolean) => {
-      this.darkMode = darkMode
-    })
-
-    socialService.authState.subscribe((user: SocialUser) => {
+  ngOnInit(): void { 
+    this.socialService.authState.subscribe((user: SocialUser) => {
       if(user != null) { 
         this.user = user; 
         console.log(user); 
         this.dbService.setUser(user.id /*replace 12345 with socialUser.id*/)
       }
     })
-
-    
   }
-
-  ngOnInit(): void { }
-
-  toggleMode = (event: any) => this.darkMode = event.detail
 
   logout = (): void => { this.socialService.signOut() }
 
   getThemeAndMode = (): string => {
-    if(this.dbService.user.darkMode != this.darkMode) this.themeService.toggleMode(this.dbService.user.id)
     const mode = this.darkMode ? 'mode-dark' : 'mode-light'
-    return mode + ' ' + this.dbService.user.theme
+    return mode + ' ' + this.theme
   }
 
 }

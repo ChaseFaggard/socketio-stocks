@@ -19,6 +19,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
 import { LoginGuard } from './loginactivate.guard';
+import { TrackFocusDirective } from './trackfocus.directive';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { LoginGuard } from './loginactivate.guard';
     NotFoundComponent,
     HomeComponent,
     AccountComponent,
-    SettingsComponent
+    SettingsComponent,
+    TrackFocusDirective
   ],
   imports: [
     BrowserModule,

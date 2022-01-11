@@ -15,20 +15,27 @@ export class AccountComponent implements OnInit {
 
   public socialUser: SocialUser = new SocialUser
 
-  public displayName:string
+  public user: User = {
+    displayName: '',
+    id: '',
+    email: '',
+    theme: '',
+    darkMode: false,
+    tickInterval: 0,
+    tickers: []
+  }
 
-  constructor(private themeService: ThemeService, private socialService: SocialAuthService, private dbService:DatabaseService) {
-    this.checked = themeService.darkMode.value
-    socialService.authState.subscribe((user: SocialUser) => this.socialUser = user )
-    this.displayName = this.dbService.user.displayName;
+  constructor(private themeService: ThemeService, private dbService:DatabaseService) {
+    this.dbService.user.subscribe((user: User) => this.user = user)
+    this.checked = dbService.user.value.darkMode
   }
 
   ngOnInit(): void { }
 
-  clicked = () => this.themeService.toggleMode(this.dbService.user.id)
+  clicked = () => this.themeService.toggleMode()
 
-  setTheme = (theme: string): void => { this.themeService.setTheme(this.dbService.user.id, theme) }
+  setTheme = (theme: string): void => { this.themeService.setTheme(theme) }
 
-  checkActive = (theme: string): string => theme === this.themeService.theme ? 'active' : ''
+  checkActive = (theme: string): string => theme === this.themeService.theme.value ? 'active' : ''
 
 }
