@@ -15,15 +15,15 @@ export class ThemeService {
     this.theme = this.dbService.user.theme;
    }
 
-  toggleMode = (): void => {
+  toggleMode = (id:string): void => {
     this.darkMode.next(!this.darkMode.value)
-    this.dbService.updateUser('12345', 'darkMode', this.darkMode.value)
+    this.dbService.updateUser(id, 'darkMode', this.darkMode.value)
     this.dbService.user.darkMode = this.darkMode.value
   }
 
-  setTheme = (theme: string) => {
+  setTheme = (id:string, theme: string) => {
     this.theme = theme
-    this.dbService.updateUser('12345', 'theme', theme)
+    this.dbService.updateUser(id, 'theme', theme)
     this.dbService.user.theme = theme
   }
 

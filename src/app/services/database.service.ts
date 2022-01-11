@@ -31,12 +31,8 @@ export class DatabaseService {
   }
 
   public async setUser(id:string){
-    this.getUsers()
-    .then(data => {
-      let user = data.find(item => item.id === id)!;
-      this.user = user;
-      console.log(this.user)
-    })
+    const users = await this.getUsers();
+    this.user = users.find(item => item.id === id)!
   }
 
   public accessDatabase() {
@@ -87,5 +83,36 @@ export class DatabaseService {
       )
     })
   }
+
+  public async checkUser(id:string):Promise<boolean>{
+    const users = await this.getUsers();
+    return users.some(item => item.id == id)
+  }
   
+  public async generateUser(id: string, name:string, email:string) {
+    let newUser = {
+      displayName: name,
+      id: id,
+      email: email,
+      theme: 'theme-purple',
+      darkMode: false,
+      tickInterval: 1,
+      tickers: []
+    }
+    let data = {
+      "record": newUser,
+      "table": "stonks"
+    }
+
+    return new Promise((resolve, reject) => {
+      this.http.post(`https://api.m3o.com/v1/db/Create`, data, this.headers).subscribe(
+        (res) => {
+          console.log(res)
+          resolve(res)
+        }, (err) => {
+          reject(err);
+        }
+      )
+    })
+  }
 }

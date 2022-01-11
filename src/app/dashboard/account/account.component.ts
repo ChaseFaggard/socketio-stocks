@@ -25,9 +25,9 @@ export class AccountComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  clicked = () => this.themeService.toggleMode()
+  clicked = () => this.themeService.toggleMode(this.dbService.user.id)
 
-  setTheme = (theme: string): void => { this.themeService.setTheme(theme) }
+  setTheme = (theme: string): void => { this.themeService.setTheme(this.dbService.user.id, theme) }
 
   checkActive = (theme: string): string => theme === this.themeService.theme ? 'active' : ''
 
