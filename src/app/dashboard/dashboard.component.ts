@@ -31,7 +31,7 @@ export class DashboardComponent implements OnInit {
     })
 
     socialService.authState.subscribe((user: SocialUser) => {
-      if(user != null) this.user = user
+      if(user != null) { this.user = user; console.log(user); }
     })
 
   }
@@ -41,5 +41,10 @@ export class DashboardComponent implements OnInit {
   toggleMode = (event: any) => this.darkMode = event.detail
 
   logout = (): void => { this.socialService.signOut() }
+
+  getThemeAndMode = (): string => {
+    const mode = this.darkMode ? 'mode-dark' : 'mode-light'
+    return mode + ' ' + this.themeService.theme
+  }
 
 }

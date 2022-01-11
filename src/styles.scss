@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+
 :root {
     /* Mode variables */
     --light-bg: white;
@@ -21,8 +22,6 @@
     --theme-color-rgb: var(--purple);
     --theme-color: rgb(var(--theme-color-rgb));
     --theme-color-light: rgba(var(--theme-color-rgb), 0.15)
-    
-    /* Theme variables */ 
 }
 
 .mode-light { 
@@ -36,12 +35,12 @@
     --mode-nav: white;
 }
 
-.theme-orange { --theme-color: var(--orange); }
-.theme-purple { --theme-color: var(--purple); }
-.theme-green { --theme-color: var(--green); }
-.theme-pink { --theme-color: var(--pink); }
-.theme-blue { --theme-color: var(--blue); }
-.theme-yellow { --theme-color: var(--yellow); }
+.theme-orange { --theme-color-rgb: var(--orange); --theme-color: rgb(var(--theme-color-rgb)); --theme-color-light: rgba(var(--theme-color-rgb), 0.15); }
+.theme-purple { --theme-color-rgb: var(--purple); --theme-color: rgb(var(--theme-color-rgb)); --theme-color-light: rgba(var(--theme-color-rgb), 0.15); }
+.theme-green { --theme-color-rgb: var(--green); --theme-color: rgb(var(--theme-color-rgb)); --theme-color-light: rgba(var(--theme-color-rgb), 0.15); }
+.theme-pink { --theme-color-rgb: var(--pink); --theme-color: rgb(var(--theme-color-rgb)); --theme-color-light: rgba(var(--theme-color-rgb), 0.15); }
+.theme-blue { --theme-color-rgb: var(--blue); --theme-color: rgb(var(--theme-color-rgb)); --theme-color-light: rgba(var(--theme-color-rgb), 0.15); }
+.theme-yellow { --theme-color-rgb: var(--yellow); --theme-color: rgb(var(--theme-color-rgb)); --theme-color-light: rgba(var(--theme-color-rgb), 0.15); }
 
 body {
     font-family: 'Poppins', sans-serif;

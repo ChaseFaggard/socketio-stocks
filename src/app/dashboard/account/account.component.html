@@ -1,4 +1,21 @@
 <h1>Account Settings</h1>
-<div>
-    <p-inputSwitch [(ngModel)]="checked" (onChange)="clicked()"></p-inputSwitch>
+<div class="main">
+    <div class="input">
+        <label for="">Display Name</label>
+        <input type="text" value="{{user.firstName}}">
+    </div>
+    <div class="themes">
+        <p>Color</p>
+        <div class="colors">
+            <span class="theme-blue" (click)="setTheme('theme-blue')"></span>
+            <span class="theme-purple" (click)="setTheme('theme-purple')"></span>
+            <span class="theme-orange" (click)="setTheme('theme-orange')"></span>
+            <span class="theme-green" (click)="setTheme('theme-green')"></span>
+            <span class="theme-pink" (click)="setTheme('theme-pink')"></span>
+            <span class="theme-yellow" (click)="setTheme('theme-yellow')"></span>
+        </div>
+    </div>
+    <div class="switch">
+        <p-inputSwitch [(ngModel)]="checked" (onChange)="clicked()"></p-inputSwitch> <p>Enable Dark Mode</p>
+    </div>
 </div>

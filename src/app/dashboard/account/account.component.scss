@@ -5,11 +5,59 @@ h1 {
     font-size: 40px;
 }
 
-div {
+.main {
     width: 90%;
     margin: auto;
     padding: 50px;
     border-radius: 10px;
     height: 85%;
     background: white;
+    color: grey;
+    .input {
+        margin: 10px 0;
+        input, label { display: block; }
+        label {
+            font-size: 13px;
+        }
+        input {
+            font-size: 20px;
+            color: rgb(104, 103, 103);
+            padding: 7px 11px;
+            margin: 5px 0;
+            border: 1px solid grey;
+            border-radius: 3px;
+            &:focus { 
+                outline: none;
+            }
+        }
+    }
+    .themes {
+        margin: 30px 0 0 0;
+        p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .colors {
+            margin-bottom: 30px;
+            width: 100%;
+            height: auto;
+            display: flex;
+            gap: 15px;
+            span {
+                width: 30px;
+                height: 30px;
+                border-radius: 50px;
+                background: var(--theme-color);
+            }
+        }
+    }
+    .switch {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        p {
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
 }
