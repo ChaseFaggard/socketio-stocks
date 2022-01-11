@@ -24,4 +24,6 @@ export class AccountComponent implements OnInit {
 
   setTheme = (theme: string): void => { this.themeService.setTheme(theme) }
 
+  checkActive = (theme: string): string => theme === this.themeService.theme ? 'active' : ''
+
 }

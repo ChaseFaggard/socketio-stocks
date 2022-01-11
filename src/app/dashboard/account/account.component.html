@@ -7,12 +7,12 @@
     <div class="themes">
         <p>Color</p>
         <div class="colors">
-            <span class="theme-blue" (click)="setTheme('theme-blue')"></span>
-            <span class="theme-purple" (click)="setTheme('theme-purple')"></span>
-            <span class="theme-orange" (click)="setTheme('theme-orange')"></span>
-            <span class="theme-green" (click)="setTheme('theme-green')"></span>
-            <span class="theme-pink" (click)="setTheme('theme-pink')"></span>
-            <span class="theme-yellow" (click)="setTheme('theme-yellow')"></span>
+            <span class="theme-blue" (click)="setTheme('theme-blue')" [ngClass]="checkActive('theme-blue')"></span>
+            <span class="theme-purple" (click)="setTheme('theme-purple')" [ngClass]="checkActive('theme-purple')"></span>
+            <span class="theme-orange" (click)="setTheme('theme-orange')" [ngClass]="checkActive('theme-orange')"></span>
+            <span class="theme-green" (click)="setTheme('theme-green')" [ngClass]="checkActive('theme-green')"></span>
+            <span class="theme-pink" (click)="setTheme('theme-pink')" [ngClass]="checkActive('theme-pink')"></span>
+            <span class="theme-yellow" (click)="setTheme('theme-yellow')" [ngClass]="checkActive('theme-yellow')"></span>
         </div>
     </div>
     <div class="switch">

@@ -3,9 +3,12 @@
         <h1>Stonks</h1>
     </div>
     <div class="header">
-        <div>
-            <fa-icon [icon]="faBell"></fa-icon>
-            <img src="{{user.photoUrl}}" alt="Profile photo" (click)="accountPopup = !accountPopup" />
+        <div class="main">
+            <h1>Welcome, {{user.firstName}}</h1>
+            <div class="account-items">
+                <fa-icon [icon]="faBell"></fa-icon>
+                <img src="{{user.photoUrl}}" alt="Profile photo" (click)="accountPopup = !accountPopup" />
+            </div>
         </div>
     </div>
     <div class="nav">
