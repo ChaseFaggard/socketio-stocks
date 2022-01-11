@@ -4,6 +4,7 @@ import { faHome, faUserCircle, faCog, faSignOutAlt } from '@fortawesome/free-sol
 import { faBell } from '@fortawesome/free-regular-svg-icons';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { ThemeService } from '../services/theme.service';
+import { DatabaseService } from '../services/database.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,7 +25,7 @@ export class DashboardComponent implements OnInit {
 
   public accountPopup:boolean = false
 
-  constructor(private themeService: ThemeService, private socialService: SocialAuthService) { 
+  constructor(private themeService: ThemeService, private socialService: SocialAuthService, private dbService:DatabaseService ) { 
 
     themeService.darkMode.subscribe((darkMode: boolean) => {
       this.darkMode = darkMode
@@ -36,7 +37,14 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.dbService.getUsers()
+    .then(data => {
+      console.log(data)
+      let activeUser = data.find(item => item.id === '12345')
+      console.log(`Displaying info for user ${activeUser?.displayName}`)
+    })
+   }
 
   toggleMode = (event: any) => this.darkMode = event.detail
 

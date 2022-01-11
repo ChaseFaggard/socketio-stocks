@@ -10,6 +10,7 @@ import { HomeComponent } from './dashboard/home/home.component';
 import { AccountComponent } from './dashboard/account/account.component';
 import { SettingsComponent } from './dashboard/settings/settings.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { HttpClientModule } from '@angular/common/http';
 
 /* PrimeNG Modules */
 import { InputSwitchModule } from 'primeng/inputswitch';
@@ -36,7 +37,8 @@ import { LoginGuard } from './loginactivate.guard';
     FontAwesomeModule,
     InputSwitchModule,
     ReactiveFormsModule,
-    SocialLoginModule
+    SocialLoginModule,
+    HttpClientModule
   ],
   providers: [
     {
