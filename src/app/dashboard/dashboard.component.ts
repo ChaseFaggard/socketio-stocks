@@ -32,18 +32,17 @@ export class DashboardComponent implements OnInit {
     })
 
     socialService.authState.subscribe((user: SocialUser) => {
-      if(user != null) { this.user = user; console.log(user); }
+      if(user != null) { 
+        this.user = user; 
+        console.log(user); 
+        this.dbService.setUser('12345' /*replace 12345 with socialUser.id*/)
+      }
     })
 
+    
   }
 
   ngOnInit(): void {
-    this.dbService.getUsers()
-    .then(data => {
-      console.log(data)
-      let activeUser = data.find(item => item.id === '12345')
-      console.log(`Displaying info for user ${activeUser?.displayName}`)
-    })
    }
 
   toggleMode = (event: any) => this.darkMode = event.detail
@@ -51,8 +50,9 @@ export class DashboardComponent implements OnInit {
   logout = (): void => { this.socialService.signOut() }
 
   getThemeAndMode = (): string => {
+    if(this.dbService.user.darkMode != this.darkMode) this.themeService.toggleMode()
     const mode = this.darkMode ? 'mode-dark' : 'mode-light'
-    return mode + ' ' + this.themeService.theme
+    return mode + ' ' + this.dbService.user.theme
   }
 
 }

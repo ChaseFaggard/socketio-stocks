@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
+import { DatabaseService } from 'src/app/services/database.service';
 import { ThemeService } from 'src/app/services/theme.service';
+import { User } from 'src/app/interfaces/User';
 
 @Component({
   selector: 'account',
@@ -11,11 +13,14 @@ export class AccountComponent implements OnInit {
 
   public checked: boolean
 
-  public user: SocialUser = new SocialUser
+  public socialUser: SocialUser = new SocialUser
 
-  constructor(private themeService: ThemeService, private socialService: SocialAuthService) {
+  public displayName:string
+
+  constructor(private themeService: ThemeService, private socialService: SocialAuthService, private dbService:DatabaseService) {
     this.checked = themeService.darkMode.value
-    socialService.authState.subscribe((user: SocialUser) => this.user = user )
+    socialService.authState.subscribe((user: SocialUser) => this.socialUser = user )
+    this.displayName = this.dbService.user.displayName;
   }
 
   ngOnInit(): void { }
