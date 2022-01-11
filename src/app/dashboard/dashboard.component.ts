@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit {
       if(user != null) { 
         this.user = user; 
         console.log(user); 
-        this.dbService.setUser('12345' /*replace 12345 with socialUser.id*/)
+        this.dbService.setUser(user.id /*replace 12345 with socialUser.id*/)
       }
     })
 
@@ -50,7 +50,7 @@ export class DashboardComponent implements OnInit {
   logout = (): void => { this.socialService.signOut() }
 
   getThemeAndMode = (): string => {
-    if(this.dbService.user.darkMode != this.darkMode) this.themeService.toggleMode()
+    if(this.dbService.user.darkMode != this.darkMode) this.themeService.toggleMode(this.dbService.user.id)
     const mode = this.darkMode ? 'mode-dark' : 'mode-light'
     return mode + ' ' + this.dbService.user.theme
   }
