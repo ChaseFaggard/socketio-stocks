@@ -48,6 +48,9 @@ h1 {
                 height: 30px;
                 border-radius: 50px;
                 background: var(--theme-color);
+                &.active {
+                    box-shadow:0 0 0 4px rgba($color: #30D5C8, $alpha: .3);
+                }
             }
         }
     }
