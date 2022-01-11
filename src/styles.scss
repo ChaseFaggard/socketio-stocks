@@ -12,11 +12,14 @@
 
     /* Theme variables */
     --purple: 129, 117, 255;
-    --orange: orange;
-    --green: green;
+    --pink: 243, 154, 157;
+    --blue: 109, 177, 191;
+    --orange: 255, 152, 118;
+    --yellow: 255, 202, 93;
+    --green: 105, 186, 164;
 
     --theme-color-rgb: var(--purple);
-    --theme-color: rgb(var(--purple));
+    --theme-color: rgb(var(--theme-color-rgb));
     --theme-color-light: rgba(var(--theme-color-rgb), 0.15)
     
     /* Theme variables */ 
@@ -36,6 +39,9 @@
 .theme-orange { --theme-color: var(--orange); }
 .theme-purple { --theme-color: var(--purple); }
 .theme-green { --theme-color: var(--green); }
+.theme-pink { --theme-color: var(--pink); }
+.theme-blue { --theme-color: var(--blue); }
+.theme-yellow { --theme-color: var(--yellow); }
 
 body {
     font-family: 'Poppins', sans-serif;

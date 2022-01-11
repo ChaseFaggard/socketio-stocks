@@ -13,9 +13,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 /* PrimeNG Modules */
 import { InputSwitchModule } from 'primeng/inputswitch';
-import {MenuModule} from 'primeng/menu';
-import { ButtonModule } from 'primeng/button';
-import { RippleModule } from 'primeng/ripple';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
@@ -39,10 +36,7 @@ import { LoginGuard } from './loginactivate.guard';
     FontAwesomeModule,
     InputSwitchModule,
     ReactiveFormsModule,
-    SocialLoginModule,
-    MenuModule,
-    ButtonModule,
-    RippleModule
+    SocialLoginModule
   ],
   providers: [
     {

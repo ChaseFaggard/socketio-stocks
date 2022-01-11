@@ -5,9 +5,7 @@
     <div class="header">
         <div>
             <fa-icon [icon]="faBell"></fa-icon>
-            <img src="{{user.photoUrl}}" alt="Profile photo">
-            <button type="button" pButton pRipple icon="pi pi-bars" label="Show" (click)="menu.toggle($event)"></button>
-            <p-menu #menu [popup]="true" [model]="items"></p-menu>
+            <img src="{{user.photoUrl}}" alt="Profile photo" (click)="accountPopup = !accountPopup" />
         </div>
     </div>
     <div class="nav">
@@ -27,6 +25,16 @@
         </nav>
     </div>
     <div class="body"> 
+        <span class="account-popup" [ngClass]="accountPopup ? '' : 'hide'">
+            <li routerLink="/dashboard/account" (click)="accountPopup = false">
+                <fa-icon [icon]="faUserCircle"></fa-icon>
+                <h3>Account</h3>
+            </li>
+            <li (click)="logout()">
+                <fa-icon [icon]="faSignOutAlt"></fa-icon>
+                <h3>Logout</h3>
+            </li>
+        </span>
         <div>
             <span></span>
             <div class="content">

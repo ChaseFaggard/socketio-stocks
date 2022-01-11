@@ -99,6 +99,51 @@ $tablet: 1100px;
     .body {
         grid-area: "body";
         position: relative;
+        .account-popup {
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            width: 180px;
+            background: white !important;
+            height: 130px;
+            transition: .15s;
+            display: block;
+            border: 2px solid var(--theme-color);
+            z-index: 10;
+            border-radius: 10px;
+            padding-top: 15px;
+            &::before, &::after {
+                content: '';
+                display: block;
+                position: absolute;
+                bottom: 100%;
+                width: 0;
+                height: 0;
+            }
+            &::before {
+                right: 30px;
+                border: 15px solid transparent;
+                border-bottom-color: var(--theme-color);
+            }
+            li {
+                height: 50px;
+                margin: 0 auto;
+                width: 80%;
+                display: flex;
+                align-items: center;
+                justify-content: left;
+                gap: 15px;
+                cursor: pointer;
+                color: grey;
+                fa-icon {
+                    padding-left: 10px;
+                    font-size: 25px;
+                }
+                &:hover {
+                    color: var(--theme-color);
+                }
+            }
+        }
         div {
             width: calc(100% - $margin*2);
             height: calc(100% - $margin);
@@ -121,7 +166,7 @@ $tablet: 1100px;
                 width: 100%;
                 height: calc(100% - $bufferHeight);
                 margin-top: $bufferHeight;
-                background: #f1f1f1;
+                background: #f0f1f5;
                 div {
                     width: 100%;
                     height: calc(100% + $bufferHeight);
@@ -137,3 +182,5 @@ $tablet: 1100px;
         grid-template-columns: 100px 1fr;
     }
 }
+
+.hide { display: none !important; }
