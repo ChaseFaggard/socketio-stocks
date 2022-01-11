@@ -11,7 +11,7 @@ import { User } from 'src/app/interfaces/User';
 })
 export class AccountComponent implements OnInit {
 
-  public checked: boolean
+  public checked: boolean = false
 
   public socialUser: SocialUser = new SocialUser
 
@@ -27,7 +27,7 @@ export class AccountComponent implements OnInit {
 
   constructor(private themeService: ThemeService, private dbService:DatabaseService) {
     this.dbService.user.subscribe((user: User) => this.user = user)
-    this.checked = dbService.user.value.darkMode
+    this.themeService.darkMode.subscribe((darkMode: boolean) => this.checked = darkMode)
   }
 
   ngOnInit(): void { }

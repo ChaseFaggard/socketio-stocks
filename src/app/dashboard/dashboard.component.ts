@@ -27,8 +27,8 @@ export class DashboardComponent implements OnInit {
   public accountPopup:boolean = false
 
   constructor(private themeService: ThemeService, private socialService: SocialAuthService, private dbService:DatabaseService ) { 
-    themeService.darkMode.subscribe((darkMode: boolean) => this.darkMode = darkMode)
-    themeService.theme.subscribe((theme: string) => this.theme = theme)
+    this.themeService.darkMode.subscribe((darkMode: boolean) => this.darkMode = darkMode)
+    this.themeService.theme.subscribe((theme: string) => this.theme = theme)
   }
 
   ngOnInit(): void { 
