@@ -11,6 +11,8 @@ import { AccountComponent } from './dashboard/account/account.component';
 import { SettingsComponent } from './dashboard/settings/settings.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HttpClientModule } from '@angular/common/http';
+import * as PlotlyJS from 'plotly.js-dist-min';
+import { PlotlyModule } from 'angular-plotly.js';
 
 /* PrimeNG Modules */
 import { InputSwitchModule } from 'primeng/inputswitch';
@@ -20,6 +22,8 @@ import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-logi
 import { GoogleLoginProvider } from 'angularx-social-login';
 import { LoginGuard } from './loginactivate.guard';
 import { TrackFocusDirective } from './trackfocus.directive';
+
+PlotlyModule.plotlyjs = PlotlyJS;
 
 @NgModule({
   declarations: [
@@ -40,7 +44,8 @@ import { TrackFocusDirective } from './trackfocus.directive';
     InputSwitchModule,
     ReactiveFormsModule,
     SocialLoginModule,
-    HttpClientModule
+    HttpClientModule,
+    PlotlyModule,
   ],
   providers: [
     {

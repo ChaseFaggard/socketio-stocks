@@ -15,5 +15,12 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  /* Plotly Notes */
+  /*
+  * Set height to 100% in style to fit to parent div
+  * Remove toolbar in config
+  * Declare type by saying type: candlestick
+  * plotly.js will populate by itself
+  * 
+  */
 }
