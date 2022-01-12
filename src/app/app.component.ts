@@ -12,13 +12,6 @@ export class AppComponent {
   title = 'client';
 
   constructor(private stockService: StockService, private logger: LoggerService) { 
-
-    this.stockService.newInterval(10, ['NBR', 'ABC'])
-
-    this.stockService.liveData().subscribe((data: Object) => {
-      logger.log(data)
-    })
-
   }
 
   getLatency = async () => {
