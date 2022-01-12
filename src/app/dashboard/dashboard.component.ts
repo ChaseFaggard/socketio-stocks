@@ -5,6 +5,8 @@ import { faBell } from '@fortawesome/free-regular-svg-icons';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { ThemeService } from '../services/theme.service';
 import { DatabaseService } from '../services/database.service';
+import { UserService } from '../services/user.service';
+import { User } from '../interfaces/User';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,7 +15,6 @@ import { DatabaseService } from '../services/database.service';
 })
 export class DashboardComponent implements OnInit {
 
-  public user: SocialUser = new SocialUser
 
   public darkMode: boolean = false
   public theme: string = 'theme-purple'
@@ -26,22 +27,23 @@ export class DashboardComponent implements OnInit {
 
   public accountPopup:boolean = false
 
-  constructor(private themeService: ThemeService, private socialService: SocialAuthService, private dbService:DatabaseService ) { 
-    this.themeService.darkMode.subscribe((darkMode: boolean) => this.darkMode = darkMode)
-    this.themeService.theme.subscribe((theme: string) => this.theme = theme)
-  }
+  public displayName: string = ''
+  public photoUrl: string = ''
 
-  ngOnInit(): void { 
-    this.socialService.authState.subscribe((user: SocialUser) => {
+  constructor(private themeService: ThemeService, private userService: UserService) { 
+    this.userService.user.subscribe(async (user: User|null) => {
       if(user != null) { 
-        this.user = user; 
-        console.log(user); 
-        this.dbService.setUser(user.id /*replace 12345 with socialUser.id*/)
+        this.displayName = user.displayName
+        this.photoUrl = user.photoUrl
+        this.themeService.darkMode.subscribe((darkMode: boolean) => this.darkMode = darkMode)
+        this.themeService.theme.subscribe((theme: string) => this.theme = theme)
       }
     })
   }
 
-  logout = (): void => { this.socialService.signOut() }
+  ngOnInit(): void { }
+
+  logout = (): void => { this.userService.logout() }
 
   getThemeAndMode = (): string => {
     const mode = this.darkMode ? 'mode-dark' : 'mode-light'

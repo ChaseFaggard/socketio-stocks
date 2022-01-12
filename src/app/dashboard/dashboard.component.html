@@ -4,10 +4,11 @@
     </div>
     <div class="header">
         <div class="main">
-            <h1>Welcome, {{user.firstName}}</h1>
+            <h1>Welcome, {{displayName}}</h1>
             <div class="account-items">
                 <fa-icon [icon]="faBell"></fa-icon>
-                <img src="{{user.photoUrl}}" alt="Profile photo" (click)="accountPopup = !accountPopup" />
+                <img *ngIf="photoUrl" src="{{photoUrl}}" alt="Profile photo" (click)="accountPopup = !accountPopup" />
+                <div *ngIf="!photoUrl" (click)="accountPopup = !accountPopup" class="circle"></div>
             </div>
         </div>
     </div>

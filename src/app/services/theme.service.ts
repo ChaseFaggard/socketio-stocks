@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { User } from '../interfaces/User';
-import { DatabaseService } from './database.service';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,21 +12,23 @@ export class ThemeService {
 
   public theme = new BehaviorSubject<string>('theme-purple') // Default theme
 
-  constructor(private dbService: DatabaseService) {
-    this.dbService.user.subscribe((user: User) => {
-      this.theme.next(user.theme)
-      this.darkMode.next(user.darkMode)
+  constructor(private userService: UserService) {
+    this.userService.user.subscribe((user: User|null) => {
+      if(user != null) {
+        this.theme.next(user.theme)
+        this.darkMode.next(user.darkMode)
+      }
     })
   }
 
   toggleMode = (): void => {
     this.darkMode.next(!this.darkMode.value)
-    this.dbService.updateUser('darkMode', this.darkMode.value)
+    this.userService.updateUser('darkMode', this.darkMode.value)
   }
 
   setTheme = (theme: string) => {
     this.theme.next(theme)
-    this.dbService.updateUser('theme', theme)
+    this.userService.updateUser('theme', theme)
   }
 
 }

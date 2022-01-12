@@ -1,10 +1,10 @@
 import { Directive, HostListener, ElementRef } from '@angular/core';
-import { DatabaseService } from './services/database.service';
+import { UserService } from './services/user.service';
 @Directive({
   selector: '[trackFocus]'
 })
 export class TrackFocusDirective {
-  constructor(private dbService: DatabaseService, private elRef: ElementRef) {}
+  constructor(private userService: UserService, private elRef: ElementRef) {}
 
   @HostListener('focus', ['$event']) onFocus(e: any) { }
   @HostListener('blur', ['$event']) onblur(e: any) { 
@@ -16,7 +16,7 @@ export class TrackFocusDirective {
   }
 
   save = (name: string): void => {
-    this.dbService.updateUser('displayName', name)
+    this.userService.updateUser('displayName', name)
   }
 
 }

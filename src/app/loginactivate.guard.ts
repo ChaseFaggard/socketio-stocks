@@ -2,18 +2,20 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { BehaviorSubject, filter, first, map, Observable, take, tap } from 'rxjs';
+import { User } from './interfaces/User';
 import { AuthService } from './services/auth.service';
+import { UserService } from './services/user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router, private socialAuthService: SocialAuthService) {}
+  constructor(private authService: AuthService, private router: Router, private userService: UserService) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    this.socialAuthService.authState.subscribe((user: SocialUser) => {
+    this.userService.user.subscribe((user: User|null) => {
       if(user == null) this.router.navigate(['login'])
     })
     

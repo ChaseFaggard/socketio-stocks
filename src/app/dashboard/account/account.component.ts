@@ -3,6 +3,7 @@ import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { DatabaseService } from 'src/app/services/database.service';
 import { ThemeService } from 'src/app/services/theme.service';
 import { User } from 'src/app/interfaces/User';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'account',
@@ -22,11 +23,12 @@ export class AccountComponent implements OnInit {
     theme: '',
     darkMode: false,
     tickInterval: 0,
-    tickers: []
+    tickers: [],
+    photoUrl: ''
   }
 
-  constructor(private themeService: ThemeService, private dbService:DatabaseService) {
-    this.dbService.user.subscribe((user: User) => this.user = user)
+  constructor(private themeService: ThemeService, private userService: UserService) {
+    this.userService.user.subscribe((user: User|null) => this.user = user!)
     this.themeService.darkMode.subscribe((darkMode: boolean) => this.checked = darkMode)
   }
 

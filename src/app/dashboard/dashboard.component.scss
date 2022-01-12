@@ -69,6 +69,13 @@ $tablet: 1100px;
                     border-radius: 50px;
                     margin: 0 15px;
                 }
+                .circle {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50px;
+                    margin: 0 15px;
+                    background: var(--theme-color);
+                }
             }
             h1 {
                 color: white;
