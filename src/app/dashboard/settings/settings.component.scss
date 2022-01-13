@@ -1,0 +1,20 @@
+h1 {
+    width: 90%;
+    margin: 0 auto 20px auto;
+    color: white;
+    font-size: 40px;
+}
+
+.main {
+    width: 90%;
+    margin: auto;
+    padding: 50px;
+    border-radius: 10px;
+    height: 85%;
+    background: var(--mode-bg);
+    color: grey; 
+    p { 
+        font-size: 13px; 
+        margin: 0 0 3px 0;
+    }   
+}

@@ -11,7 +11,7 @@ h1 {
     padding: 50px;
     border-radius: 10px;
     height: 85%;
-    background: white;
+    background: var(--mode-bg);
     color: grey;
     .input {
         margin: 10px 0;
@@ -21,7 +21,8 @@ h1 {
         }
         input {
             font-size: 20px;
-            color: rgb(104, 103, 103);
+            background: var(--mode-bg);
+            color: var(--mode-text2);
             padding: 7px 11px;
             margin: 5px 0;
             border: 1px solid grey;

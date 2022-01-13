@@ -79,7 +79,6 @@ export class DatabaseService {
     return new Promise((resolve, reject) => {
       this.http.post(`https://api.m3o.com/v1/db/Update`, data, this.headers).subscribe(
         (res) => {
-          console.log(res)
           resolve(user)
         }, (err) => {
           reject(err);
