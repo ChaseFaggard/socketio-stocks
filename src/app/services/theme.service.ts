@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { User } from '../interfaces/User';
+import { User } from '../Interfaces';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -15,8 +15,8 @@ export class ThemeService {
   constructor(private userService: UserService) {
     this.userService.user.subscribe((user: User|null) => {
       if(user != null) {
-        this.theme.next(user.theme)
-        this.darkMode.next(user.darkMode)
+        if(user.theme != this.theme.value) this.theme.next(user.theme)
+        if(user.darkMode != this.darkMode.value) this.darkMode.next(user.darkMode)
       }
     })
   }

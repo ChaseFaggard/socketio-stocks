@@ -9,3 +9,13 @@ export interface User {
     tickers: string[]
     //This is where we're going to put notif stuff, but we need to figure out how to organize that first
 }
+
+export type DataObject = { 
+    symbol: string
+    currentValue: number
+}
+
+export interface LiveData {
+    'response-type': string,
+    data: DataObject[]
+}

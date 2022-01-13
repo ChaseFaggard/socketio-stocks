@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core'
-import { Observable } from 'rxjs'
+import { BehaviorSubject, Observable } from 'rxjs'
 import { io, Socket } from 'socket.io-client'
 import { environment } from 'src/environments/environment'
+import { DataObject, LiveData } from '../Interfaces'
+import { LoggerService } from './logger.service'
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +12,15 @@ export class StockService {
 
   private socket: Socket = io(environment.production ? 'https://socketio-livestocks.herokuapp.com/' : 'http://localhost:8080')
 
-  constructor() {
+  public liveData = new BehaviorSubject<DataObject[] | null>(null)
 
-   }
+  constructor(private logger: LoggerService) { 
+
+    this.getLiveData().subscribe((data: LiveData) => {
+      this.logger.log(data)
+      this.liveData.next(data.data)
+    })
+  }
 
   public asyncEmit = (eventName: string, data?: any): Promise<any> => {
     return new Promise((resolve, reject) => {
@@ -49,15 +57,15 @@ export class StockService {
     return this.asyncEmit('listData')
   }
 
-  public liveData = (): Observable<Object> => {
-    return new Observable<Object>((observer:any) => {
-      this.socket.on('liveData', (data:object) => {
+  public getLiveData = (): Observable<LiveData> => {
+    return new Observable<LiveData>((observer:any) => {
+      this.socket.on('liveData', (data: LiveData) => {
         observer.next(data)
       })
     })
   }
 
-  public newInterval = (interval:number, tickers: string[]) => {
+  public setInterval = (interval:number, tickers: string[]) => {
     this.socket.emit('changeInterval', interval)
     this.requestLive(tickers)
   }

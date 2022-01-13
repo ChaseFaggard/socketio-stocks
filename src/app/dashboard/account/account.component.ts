@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { DatabaseService } from 'src/app/services/database.service';
 import { ThemeService } from 'src/app/services/theme.service';
-import { User } from 'src/app/interfaces/User';
+import { User } from 'src/app/Interfaces';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GoogleLoginProvider, SocialAuthService, SocialUser } from 'angularx-social-login';
 import { BehaviorSubject } from 'rxjs';
-import { User } from '../interfaces/User';
+import { User } from '../Interfaces';
 import { DatabaseService } from './database.service';
 import { LocalStorageService } from './local-storage.service';
 
@@ -75,8 +75,10 @@ export class UserService {
   }
 
   updateUser = async (key: string, value: any) => {
-    const updatedUser: User = await this.dbService.updateUser(this.user.value!, key, value)
-    this.user.next(updatedUser)
+    if((this.user.value as any)[key] != value) { // Update user if the change is different
+      const updatedUser: User = await this.dbService.updateUser(this.user.value!, key, value)
+      this.user.next(updatedUser)
+    }
   }
 
 }

@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SocialAuthService, GoogleLoginProvider, SocialUser } from 'angularx-social-login';
-import { User } from '../interfaces/User';
+import { User } from '../Interfaces';
 import { DatabaseService } from '../services/database.service';
 import { LoggerService } from '../services/logger.service';
 import { UserService } from '../services/user.service';

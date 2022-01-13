@@ -1,6 +1,6 @@
 <div class="header">
     <div class="stock-names">
-        <h1>Stock</h1>
+        <h1>{{liveData[1].symbol}}</h1>
         <h3>Stock</h3>
         <h3>Stock</h3>
     </div>
@@ -11,7 +11,7 @@
 </div>
 <div class="main">
     <div class="live grid-item">
-        <h2>{{data[0].currentValue}}</h2>
+        <h2>${{ liveData[1].currentValue | number : '1.2-2'}}</h2>
     </div>
     <div class="news grid-item">
 
@@ -21,7 +21,7 @@
     </div>
     <div class="sidebar grid-item">
         <div class="content">
-            <h3>Stock</h3>
+            <h3>{{liveData[1].symbol}}</h3>
             <div class="item">
                 <h4>Open</h4>
                 <p>$155</p>

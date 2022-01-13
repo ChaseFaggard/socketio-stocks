@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { BehaviorSubject, filter, first, map, Observable, take, tap } from 'rxjs';
-import { User } from './interfaces/User';
+import { User } from './Interfaces';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 
