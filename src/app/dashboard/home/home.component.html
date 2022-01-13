@@ -16,27 +16,27 @@
     <div class="news grid-item">
 
     </div>
-    <div class="historical grid-item">
-
+    <div id="historical" class="historical grid-item">
+        <plotly-plot [data]="candlestickData" [layout]="candlestickLayout" [config] = "candlestickConfig" [style]="{ 'height': '90%' }" ></plotly-plot>
     </div>
     <div class="sidebar grid-item">
         <div class="content">
-            <h3>{{liveData[1].symbol}}</h3>
+            <h3>{{historicalData[0].symbol}}</h3>
             <div class="item">
                 <h4>Open</h4>
-                <p>$155</p>
+                <p>${{historicalData[0].data[0].open | number : '1.2-2'}}</p>
             </div>
             <div class="item">
                 <h4>Close</h4>
-                <p>$155</p>
+                <p>${{historicalData[0].data[0].close | number : '1.2-2'}}</p>
             </div>
             <div class="item">
                 <h4>High</h4>
-                <p>$155</p>
+                <p>${{historicalData[0].data[0].high | number : '1.2-2'}}</p>
             </div>
             <div class="item">
                 <h4>Low</h4>
-                <p>$155</p>
+                <p>${{historicalData[0].data[0].low | number : '1.2-2'}}</p>
             </div>
         </div>
     </div>

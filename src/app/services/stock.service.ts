@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { io, Socket } from 'socket.io-client'
 import { environment } from 'src/environments/environment'
-import { DataObject, LiveData } from '../Interfaces'
+import { DataObject, HistoricalData, HistoricalObject, LiveData } from '../Interfaces'
 import { LoggerService } from './logger.service'
 
 @Injectable({
@@ -17,7 +17,7 @@ export class StockService {
   constructor(private logger: LoggerService) { 
 
     this.getLiveData().subscribe((data: LiveData) => {
-      this.logger.log(data)
+      //this.logger.log(data)
       this.liveData.next(data.data)
     })
   }
@@ -49,8 +49,8 @@ export class StockService {
     this.socket.emit('startLive', tickers)
   }
 
-  public requestHistorical = async (request: { tickers: string[], startData: string }): Promise<Object> => {
-    return this.asyncEmit('historicalData', request)
+  public requestHistorical = async (tickers:string[]): Promise<HistoricalData> => {
+    return this.asyncEmit('historicalData', tickers)
   }
 
   public requestList = async (): Promise<String[]> => {
@@ -64,6 +64,8 @@ export class StockService {
       })
     })
   }
+
+
 
   public setInterval = (interval:number, tickers: string[]) => {
     this.socket.emit('changeInterval', interval)

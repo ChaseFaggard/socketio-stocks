@@ -20,6 +20,8 @@ export class LocalStorageService {
   // Saves a user to local storage
   saveUser = (user: User|null): void => { this.save('user', JSON.stringify(user)) }
 
+  //saveHistorical = ()
+
   // Retrieves a user from local storage
   getUser = (): User|null => {
     const user: string|null = this.get('user')
