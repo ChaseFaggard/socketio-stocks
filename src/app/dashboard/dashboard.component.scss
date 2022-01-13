@@ -172,7 +172,7 @@ $tablet: 1100px;
                 width: calc(100%);
                 height: calc(100% - $bufferHeight);
                 margin-top: $bufferHeight;
-                background: #f0f1f5;
+                background: var(--mode-bg2);
                 border-radius: 0 0 $border-radius $border-radius;
                 .component {
                     width: 100%;
@@ -201,6 +201,13 @@ $tablet: 1100px;
     /* Media Queries */
     @media screen and (max-width: $tablet) {
         grid-template-columns: 100px 1fr;
+        nav {
+            li {
+                justify-content: center !important;
+                fa-icon { padding-left: 0 !important; font-size: 28px !important; }
+                h3 { display: none; }
+            }
+        }
     }
 }
 

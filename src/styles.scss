@@ -3,11 +3,18 @@
 :root {
     /* Mode variables */
     --light-bg: white;
+    --light-bg-secondary: #f0f1f5;
     --light-text: black;
+    --light-text-secondary: grey;
     --dark-bg: rgb(41, 39, 39);
+    --dark-bg-secondary: rgb(50, 50, 50);
     --dark-text: white;
+    --dark-text-secondary: rgb(207, 205, 205);
+
     --mode-bg: var(--light-bg);
+    --mode-bg2: var(--light-bg-secondary);
     --mode-text: var(--light-text);
+    --mode-text2: var(--light-text-secondary);
     --mode-nav: grey;
     /* Mode variables */
 
@@ -26,12 +33,16 @@
 
 .mode-light { 
     --mode-bg: var(--light-bg); 
+    --mode-bg2: var(--light-bg-secondary);
     --mode-text: var(--light-text);
+    --mode-text2: var(--light-text-secondary);
     --mode-nav: grey;
 }
 .mode-dark { 
     --mode-bg: var(--dark-bg); 
+    --mode-bg2: var(--dark-bg-secondary);
     --mode-text: var(--dark-text); 
+    --mode-text2: var(--dark-text-secondary);
     --mode-nav: white;
 }
 
@@ -44,4 +55,38 @@
 
 body {
     font-family: 'Poppins', sans-serif;
+}
+
+/* PrimeNG Dropdown styles */
+.p-dropdown-items {
+    background: var(--mode-bg) !important;
+    li {
+        color: var(--mode-text2) !important;
+        &.p-highlight {
+            background: var(--theme-color-light) !important;
+            color: var(--theme-color) !important;
+            &:hover { background: var(--theme-color-light) !important; }
+        }
+        &:hover {
+            background: var(--mode-bg2) !important;
+        }
+    }
+ }
+ 
+ .p-dropdown {
+     .p-inputtext { color: var(--mode-text2) !important; }
+     background: var(--mode-bg) !important;
+     border: 1px solid rgb(158, 157, 157) !important;
+     &:hover {
+         border: 1px solid rgb(158, 157, 157) !important;
+     }
+ }
+ 
+ .p-focus {
+     box-shadow: none !important;
+     outline: none !important;
+ }
+
+.p-inputswitch-checked .p-inputswitch-slider {
+    background: var(--theme-color) !important;  
 }

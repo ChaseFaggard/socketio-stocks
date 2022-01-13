@@ -34,7 +34,7 @@
 
     .grid-item {
         border-radius: 10px;
-        background: white;
+        background: var(--mode-bg);
     }
     
     .live {
@@ -45,7 +45,7 @@
         justify-content: center;
         h2 {
             font-size: 40px;
-            color: grey;
+            color: var(--mode-text2);
             font-weight: 200;
         }
     }
@@ -65,14 +65,14 @@
             height: 90%;
             margin: auto;
             margin-top: 5%;
-            h3 { font-size: 25px; margin-bottom: 5px; }
+            h3 { font-size: 25px; margin-bottom: 5px; color: var(--mode-text2); }
             .item {
                 height: 40px;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                h4 { color: grey; font-weight: normal;}
-                p { font-weight: bold;}
+                h4 { color: var(--mode-text2);  font-weight: normal;}
+                p { font-weight: bold; color: var(--mode-text); }
             }
         }
     }

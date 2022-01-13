@@ -13,9 +13,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HttpClientModule } from '@angular/common/http';
 import * as PlotlyJS from 'plotly.js-dist-min';
 import { PlotlyModule } from 'angular-plotly.js';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 /* PrimeNG Modules */
 import { InputSwitchModule } from 'primeng/inputswitch';
+import {DropdownModule} from 'primeng/dropdown';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
@@ -46,6 +48,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     SocialLoginModule,
     HttpClientModule,
     PlotlyModule,
+    BrowserAnimationsModule,
+    DropdownModule
   ],
   providers: [
     {

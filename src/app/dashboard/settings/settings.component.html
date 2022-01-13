@@ -1,1 +1,13 @@
-<p>settings works!</p>
+<h1>Stock Settings</h1>
+<div class="main">
+    <p>Tick Interval</p>
+    <p-dropdown 
+        [options]="intervals" 
+        [(ngModel)]="selectedInterval" 
+        optionLabel="name" 
+        (onChange)="changeInterval(selectedInterval.value)"
+    ></p-dropdown>
+    <div class="tickers">
+        
+    </div>
+</div>
