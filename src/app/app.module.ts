@@ -14,10 +14,11 @@ import { HttpClientModule } from '@angular/common/http';
 import * as PlotlyJS from 'plotly.js-dist-min';
 import { PlotlyModule } from 'angular-plotly.js';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 /* PrimeNG Modules */
 import { InputSwitchModule } from 'primeng/inputswitch';
-import {DropdownModule} from 'primeng/dropdown';
+import { DropdownModule } from 'primeng/dropdown';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
@@ -49,7 +50,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     HttpClientModule,
     PlotlyModule,
     BrowserAnimationsModule,
-    DropdownModule
+    DropdownModule,
+    AutoCompleteModule
   ],
   providers: [
     {

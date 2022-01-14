@@ -57,6 +57,12 @@
     .historical {
         grid-column: 1 / 8;
         grid-row: 2 / 4;
+        position: relative;
+        .inner {
+            width: 90%;
+            height: 50%;
+            margin: auto;
+        }
     }
     .sidebar {
         grid-column: 8 / 11;
