@@ -42,3 +42,10 @@ export interface ListData {
     'response-type': string,
     symbols: string[]
 }
+
+export interface NewsData {
+    ticker: string,
+    newsUrl: string,
+    newsHeadline: string,
+    newsImg: string
+}
