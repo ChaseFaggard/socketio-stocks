@@ -11,6 +11,7 @@
     <div class="tickers">
         <div class="item" *ngFor="let ticker of userTickers">
             <p>{{ticker}}</p>
+            <fa-icon (click)="deleteTicker(ticker)" [icon]="faMinus"></fa-icon>
          </div>
          <div class="autocomplete"><p-autoComplete 
             [(ngModel)]="selectedTicker" 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { faMinusCircle } from '@fortawesome/free-solid-svg-icons';
 import { User } from 'src/app/Interfaces';
 import { StockService } from 'src/app/services/stock.service';
 import { UserService } from 'src/app/services/user.service';
@@ -19,6 +20,8 @@ export class SettingsComponent implements OnInit {
   public userTickers: string[] = []
 
   public selectedTicker: string = ''
+
+  public faMinus = faMinusCircle
 
   public selectedInterval: Interval = {
     name: '',
@@ -53,16 +56,16 @@ export class SettingsComponent implements OnInit {
     let filtered: any[] = []
     let query = event.query
     for(let ticker of this.tickers) {
-      if(ticker.toLowerCase().indexOf(query.toLowerCase()) == 0) filtered.push(ticker)
+      if(this.userTickers.findIndex( t => t === ticker) == -1 && 
+        ticker.toLowerCase().indexOf(query.toLowerCase()) == 0) filtered.push(ticker)
     }
     this.filteredTickers = filtered
   }
 
   changeInterval = async (interval: number) => await this.userService.updateUser('tickInterval', interval)
 
-  addTicker = async (ticker: string) => {
-    await this.userService.addTicker(ticker)
-  }
+  addTicker = async (ticker: string) => await this.userService.addTicker(ticker)
+  deleteTicker = async (ticker: string) => await this.userService.deleteTicker(ticker)
 
 }
 

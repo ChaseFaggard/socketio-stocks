@@ -82,8 +82,13 @@ export class UserService {
     } else console.log('Ticker already exists... not adding')
   }
 
-  removeTicker = async (ticker: string) => {
-
+  deleteTicker = async (ticker: string) => {
+    let index = this.user.value!.tickers.findIndex((t: string) => ticker == t)
+    if(index != -1) {
+      let newTickers: string[] = [...this.user.value!.tickers]
+      newTickers.splice(index, 1)
+      await this.updateUser('tickers', newTickers)
+    } else console.log('Ticker to delete not found... not deleting')
   }
 
   updateUser = async (key: string, value: any) => {

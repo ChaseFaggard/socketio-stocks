@@ -60,11 +60,11 @@ export class HomeComponent implements OnInit {
     await this.getHistorical()
   }
 
-  public changeIndex(next:boolean) {
-    if(next && this.activeIndex < this.stockData.length-1) this.activeIndex++;
-    else if(!next && this.activeIndex > 0) this.activeIndex--
-
-    console.log(this.activeIndex)
+  public changeIndex(next?:boolean) {
+    if(next != undefined) {
+      if(next && this.activeIndex < this.stockData.length-1) this.activeIndex++;
+      else if(!next && this.activeIndex > 0) this.activeIndex--
+    }
     this.getHistorical()
   }
 
