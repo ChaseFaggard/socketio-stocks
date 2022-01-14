@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { faHome, faUserCircle, faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { faBell } from '@fortawesome/free-regular-svg-icons';
+//suggestion: remove unused imports
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { ThemeService } from '../services/theme.service';
 import { DatabaseService } from '../services/database.service';
@@ -21,6 +22,7 @@ export class DashboardComponent implements OnInit {
   public darkMode: boolean = false
   public theme: string = 'theme-purple'
 
+  //suggestion: variables seem unnecessary
   public faHome = faHome
   public faUserCircle = faUserCircle
   public faCog = faCog
