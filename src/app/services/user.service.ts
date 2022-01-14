@@ -75,20 +75,23 @@ export class UserService {
   }
 
   addTicker = async (ticker: string) => {
-    let tickers: string[] = this.user.value!.tickers
-    tickers.push(ticker)
-    await this.updateUser('tickers', tickers)
+    let index = this.user.value!.tickers.findIndex((t: string) => ticker == t)
+    if(index == -1) { // Not found
+      let newTickers: string[] = [...this.user.value!.tickers, ticker]
+      await this.updateUser('tickers', newTickers)
+    } else console.log('Ticker already exists... not adding')
   }
 
   removeTicker = async (ticker: string) => {
-    
+
   }
 
   updateUser = async (key: string, value: any) => {
-    if((this.user.value as any)[key] != value) { // Update user if the change is different
+    const currentItem = (this.user.value as any)[key]
+    if(JSON.stringify(currentItem) !== JSON.stringify(value)) { // Update user if the change is different
       const updatedUser: User = await this.dbService.updateUser(this.user.value!, key, value)
       this.user.next(updatedUser)
-    }
+    } else console.log('Update not needed... change is the same')
   }
 
 }

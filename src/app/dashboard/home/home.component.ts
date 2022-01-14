@@ -1,11 +1,12 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { DataObject, HistoricalData, HistoricalObject, LiveData } from 'src/app/Interfaces';
+import { DataObject, HistoricalDataObject, HistoricalStockObject } from 'src/app/Interfaces';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import * as Plotly from 'plotly.js-dist-min'; // afdasas
 import { LoggerService } from 'src/app/services/logger.service';
 import { StockService } from 'src/app/services/stock.service';
 import { ThemeService } from 'src/app/services/theme.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'home',
@@ -19,7 +20,8 @@ export class HomeComponent implements OnInit {
   public faArrowRight = faArrowRight
 
   public liveData: DataObject[] = []
-  public historicalData: HistoricalObject[] = []
+  public currentHistoricalData: HistoricalDataObject[] = []
+  public stockData: HistoricalStockObject[] = []
 
   candlestickData: any[] = []
   candlestickLayout: any
@@ -36,19 +38,30 @@ export class HomeComponent implements OnInit {
     private stockService: StockService, 
     private themeService: ThemeService, 
     private elementRef: ElementRef, 
-    private localService:LocalStorageService) {
+    private localService:LocalStorageService,
+    private userService: UserService) {
 
     this.stockService.liveData.subscribe((data: DataObject[] | null) => {
       if (data != null) this.liveData = data
     })
 
-    this.getHistorical()
+    this.getStockData()
   }
 
   ngOnInit(): void { }
 
+  public async getStockData() {
+    localStorage.removeItem('historical')
+    if(this.localService.hasHistorical()) this.stockData = this.localService.getHistorical()!
+    else {
+      this.stockData = await this.stockService.requestHistorical(this.userService.user.value!.tickers)
+      this.localService.saveHistorical(this.stockData)
+    }
+    await this.getHistorical()
+  }
+
   public changeIndex(next:boolean) {
-    if(next && this.activeIndex < 1 /*replace this with tickers.length*/) this.activeIndex++;
+    if(next && this.activeIndex < this.stockData.length-1) this.activeIndex++;
     else if(!next && this.activeIndex > 0) this.activeIndex--
 
     console.log(this.activeIndex)
@@ -56,26 +69,17 @@ export class HomeComponent implements OnInit {
   }
 
   public async getHistorical() {
-    if(this.localService.hasHistorical())
-    {
-      const allData = this.localService.getHistorical()
-      this.historicalData = allData!.data[this.activeIndex]
-    }
-    else{
-      const allData = await this.stockService.requestHistorical(['ABC', 'NBR'])
-      this.localService.saveHistorical(allData)
-      this.historicalData = allData!.data[this.activeIndex]
-    }
+    this.currentHistoricalData = this.stockData[this.activeIndex].data
 
     const abc = {
-      x: Array.from(this.historicalData.slice((this.historicalData.length - 7), this.historicalData.length), item => item.data[0].timestamp.slice(0, 10)),
-      close: Array.from(this.historicalData.slice((this.historicalData.length - 7), this.historicalData.length), item => item.data[0].close),
+      x: Array.from(this.currentHistoricalData.slice((this.currentHistoricalData.length - 7), this.currentHistoricalData.length), item => item.timestamp.slice(0, 10)),
+      close: Array.from(this.currentHistoricalData.slice((this.currentHistoricalData.length - 7), this.currentHistoricalData.length), item => item.close),
       decreasing: { line: { color: '#7f7f7f' } },
-      high: Array.from(this.historicalData.slice((this.historicalData.length - 7), this.historicalData.length), item => item.data[0].high),
+      high: Array.from(this.currentHistoricalData.slice((this.currentHistoricalData.length - 7), this.currentHistoricalData.length), item => item.high),
       increasing: { line: { color: '#17becf' } },
       line: { color: 'rgba(31,119,180,1)' },
-      low: Array.from(this.historicalData.slice((this.historicalData.length - 7), this.historicalData.length), item => item.data[0].low),
-      open: Array.from(this.historicalData.slice((this.historicalData.length - 7), this.historicalData.length), item => item.data[0].open),
+      low: Array.from(this.currentHistoricalData.slice((this.currentHistoricalData.length - 7), this.currentHistoricalData.length), item => item.low),
+      open: Array.from(this.currentHistoricalData.slice((this.currentHistoricalData.length - 7), this.currentHistoricalData.length), item => item.open),
       type: 'candlestick',
       xaxis: 'x',
       yaxis: 'y',
@@ -141,19 +145,5 @@ export class HomeComponent implements OnInit {
         Plotly.redraw('graph')
     })
 
-  }
-
-  findHigh():number {
-    let highest = 0;
-    this.historicalData.forEach(item => { if (item.data[0].high > highest) { highest = item.data[0].high } })
-    console.log(highest + Math.ceil(highest / 2))
-    return highest + Math.ceil(highest / 2)
-  }
-
-  findLow():number {
-    let lowest = this.findHigh();
-    this.historicalData.forEach(item => { if (item.data[0].low < lowest) { lowest = item.data[0].low } })
-    console.log(lowest - Math.floor(lowest / 2))
-    return lowest - Math.floor(lowest / 2)
   }
 }

@@ -15,25 +15,27 @@ export type DataObject = {
     currentValue: number
 }
 
-export type HistoricalObject = {
-    symbol: string
-    data: [{
-        timestamp: string,
-        open: number,
-        high: number,
-        low: number,
-        close: number
-    }]
-}
-
 export interface LiveData {
     'response-type': string,
     data: DataObject[]
 }
 
+export type HistoricalDataObject = {
+    timestamp: string,
+    open: number,
+    high: number,
+    low: number,
+    close: number
+}
+
+export type HistoricalStockObject = {
+    symbol: string
+    data: HistoricalDataObject[]
+}
+
 export interface HistoricalData {
     'response-type': string,
-    data: (HistoricalObject[])[]
+    data: HistoricalStockObject[]
 }
 
 export interface ListData {

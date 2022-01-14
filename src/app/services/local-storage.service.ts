@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HistoricalData, User } from '../Interfaces';
+import { HistoricalData, HistoricalStockObject, User } from '../Interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -34,11 +34,11 @@ export class LocalStorageService {
 
 
   //Take allll of the pieces that check for a user, and just replace it with historical data! ez pz
-  saveHistorical = (data: HistoricalData): void => { this.save('historical', JSON.stringify(data))}
+  saveHistorical = (data: HistoricalStockObject[]): void => { this.save('historical', JSON.stringify(data))}
 
   hasHistorical = (): boolean => this.has('historical')
 
-  getHistorical = (): HistoricalData|null => {
+  getHistorical = (): HistoricalStockObject[]|null => {
     const data: string|null = this.get('historical')
     if(data) return JSON.parse(data)
     return null

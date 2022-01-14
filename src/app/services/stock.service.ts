@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { io, Socket } from 'socket.io-client'
 import { environment } from 'src/environments/environment'
-import { DataObject, HistoricalData, HistoricalObject, ListData, LiveData } from '../Interfaces'
+import { DataObject, HistoricalStockObject, ListData, LiveData } from '../Interfaces'
 import { LoggerService } from './logger.service'
 
 @Injectable({
@@ -49,8 +49,9 @@ export class StockService {
     this.socket.emit('startLive', tickers)
   }
 
-  public requestHistorical = async (tickers:string[]): Promise<HistoricalData> => {
-    return this.asyncEmit('historicalData', tickers)
+  public requestHistorical = async (tickers:string[]): Promise<HistoricalStockObject[]> => {
+    const data = await this.asyncEmit('historicalData', tickers)
+    return data.data
   }
 
   public requestList = async (): Promise<string[]> => {

@@ -41,9 +41,10 @@ export class DashboardComponent implements OnInit {
       if(user != null) { 
         this.displayName = user.displayName
         this.photoUrl = user.photoUrl
-        if(this.tickInterval != user.tickInterval) {
+        if(this.tickInterval != user.tickInterval || this.tickers != user.tickers) {
           this.tickInterval = user.tickInterval
-          this.stockService.setInterval(this.tickInterval, ['NBR', 'ABC'])
+          this.tickers = user.tickers
+          this.stockService.setInterval(this.tickInterval, this.tickers)
         }
       }
     })
