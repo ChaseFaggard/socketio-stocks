@@ -5,8 +5,8 @@
         <h3>Stock</h3>
     </div>
     <div class="arrows">
-        <fa-icon [icon]="faArrowLeft"></fa-icon>
-        <fa-icon [icon]="faArrowRight"></fa-icon>
+        <fa-icon (click)="changeIndex(false)" [icon]="faArrowLeft"></fa-icon>
+        <fa-icon (click)="changeIndex(true)" [icon]="faArrowRight"></fa-icon>
     </div>
 </div>
 <div class="main">

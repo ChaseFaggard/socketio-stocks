@@ -33,5 +33,5 @@ export interface LiveData {
 
 export interface HistoricalData {
     'response-type': string,
-    data: HistoricalObject[]
+    data: (HistoricalObject[])[]
 }
