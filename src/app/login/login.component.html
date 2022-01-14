@@ -1,19 +1,29 @@
-<p>login works!</p>
-<div>
-    <button type="button" (click)="loginWithGoogle()">Login with Google</button>
-</div>
-
-<div *ngIf="isLoggedin === true">
-    <div class="form-group">
-        <label>First Name</label>
-        <input type="text" class="form-control" [value]="socialUser.firstName" id="firstname" readonly>
+<div class="form-container">
+    <div class="form-wrap">
+        <h1>Sign In</h1>
+        <button class="google" type="button" (click)="loginWithGoogle()"><fa-icon [icon]="faGoogle"></fa-icon><p>Sign in with Google</p></button>
+        <form id="login-form" autocomplete="off">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <div class="input">
+                    <fa-icon [icon]="faEnvelope"></fa-icon>
+                    <input type="email" name="email" id="email" required />
+                </div>
+               
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input">
+                    <fa-icon [icon]="faKey"></fa-icon>
+                    <input type="password" name="password" id="password" required />
+                </div>
+            </div>
+            <button type="submit" class="btn">Sign in</button>
+        </form>
     </div>
-    <div class="form-group">
-        <label>Last Name</label>
-        <input type="text" class="form-control" [value]="socialUser.lastName" id="lastname" readonly>
-    </div>
-    <div class="form-group">
-        <label>Email</label>
-        <input type="text" class="form-control" [value]="socialUser.email" id="email" readonly>
-    </div>
+    <footer>
+        <p>Don't have an account? <a id="signup" href="#">Signup Here</a></p>
+    </footer>
+    <div class="msg error" id="login-errorMsg"></div>
+    <div class="msg success" id="login-successMsg"></div>
 </div>

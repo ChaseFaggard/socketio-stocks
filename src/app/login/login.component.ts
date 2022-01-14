@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SocialAuthService, GoogleLoginProvider, SocialUser } from 'angularx-social-login';
+import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { User } from '../Interfaces';
-import { DatabaseService } from '../services/database.service';
 import { LoggerService } from '../services/logger.service';
 import { UserService } from '../services/user.service';
+import { faKey, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,10 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup|null = null;
   socialUser: SocialUser = new SocialUser;
   isLoggedin: boolean = false;  
+
+  public faKey = faKey
+  public faEnvelope = faEnvelope
+  public faGoogle = faGoogle
   
   constructor(
     private formBuilder: FormBuilder, 
