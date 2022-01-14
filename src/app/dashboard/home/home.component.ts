@@ -7,6 +7,7 @@ import { LoggerService } from 'src/app/services/logger.service';
 import { StockService } from 'src/app/services/stock.service';
 import { ThemeService } from 'src/app/services/theme.service';
 import { UserService } from 'src/app/services/user.service';
+import { NewsService } from 'src/app/services/news.service';
 
 @Component({
   selector: 'home',
@@ -14,7 +15,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  public activeIndex:number = 0;
+  public activeIndex: number = 0;
 
   public faArrowLeft = faArrowLeft
   public faArrowRight = faArrowRight
@@ -22,6 +23,10 @@ export class HomeComponent implements OnInit {
   public liveData: DataObject[] = []
   public currentHistoricalData: HistoricalDataObject[] = []
   public stockData: HistoricalStockObject[] = []
+
+  public newsImg: string = '';
+  public newsHeadline: string = '';
+  public newsUrl: string = '';
 
   candlestickData: any[] = []
   candlestickLayout: any
@@ -34,11 +39,12 @@ export class HomeComponent implements OnInit {
   }
 
   constructor(
-    private logger: LoggerService, 
-    private stockService: StockService, 
-    private themeService: ThemeService, 
-    private elementRef: ElementRef, 
-    private localService:LocalStorageService,
+    private logger: LoggerService,
+    private stockService: StockService,
+    private newsService: NewsService,
+    private themeService: ThemeService,
+    private elementRef: ElementRef,
+    private localService: LocalStorageService,
     private userService: UserService) {
 
     this.stockService.liveData.subscribe((data: DataObject[] | null) => {
@@ -52,20 +58,30 @@ export class HomeComponent implements OnInit {
 
   public async getStockData() {
     localStorage.removeItem('historical')
-    if(this.localService.hasHistorical()) this.stockData = this.localService.getHistorical()!
+    if (this.localService.hasHistorical()) this.stockData = this.localService.getHistorical()!
     else {
       this.stockData = await this.stockService.requestHistorical(this.userService.user.value!.tickers)
       this.localService.saveHistorical(this.stockData)
     }
     await this.getHistorical()
+    await this.getNews()
   }
 
-  public changeIndex(next:boolean) {
-    if(next && this.activeIndex < this.stockData.length-1) this.activeIndex++;
-    else if(!next && this.activeIndex > 0) this.activeIndex--
+  public changeIndex(next: boolean) {
+    if (next && this.activeIndex < this.stockData.length - 1) this.activeIndex++;
+    else if (!next && this.activeIndex > 0) this.activeIndex--
 
     console.log(this.activeIndex)
     this.getHistorical()
+  }
+
+  public async getNews() {
+    let news = await this.newsService.newsCall('NBR')
+    this.localService.saveNews(news)
+    console.log(news)
+    this.newsImg = news.newsImg;
+    this.newsHeadline = news.newsHeadline;
+    this.newsUrl = news.newsUrl;
   }
 
   public async getHistorical() {
@@ -102,7 +118,7 @@ export class HomeComponent implements OnInit {
         type: 'date',
         color: 'white',
         rangeslider: {
-          visible:false
+          visible: false
         },
         showgrid: false
       },
@@ -141,8 +157,8 @@ export class HomeComponent implements OnInit {
     })
 
     this.themeService.theme.subscribe((theme: string) => {
-        this.candlestickData[0].increasing.line.color = getComputedStyle(this.elementRef.nativeElement).getPropertyValue('--theme-color')
-        Plotly.redraw('graph')
+      this.candlestickData[0].increasing.line.color = getComputedStyle(this.elementRef.nativeElement).getPropertyValue('--theme-color')
+      Plotly.redraw('graph')
     })
 
   }

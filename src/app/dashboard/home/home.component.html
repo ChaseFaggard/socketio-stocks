@@ -14,7 +14,10 @@
         <h2>${{ liveData[activeIndex].currentValue | number : '1.2-2'}}</h2>
     </div>
     <div class="news grid-item">
-
+        <div class="image">
+            <img [src]="newsImg" alt="news_img">
+        </div>
+        <div class="headline"><a [href]="newsUrl">{{newsHeadline}}</a></div>
     </div>
     <div id="historical" class="historical grid-item">
         <div class="inner">

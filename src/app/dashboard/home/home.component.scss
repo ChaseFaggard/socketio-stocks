@@ -53,6 +53,27 @@
     .news {
         grid-column: 5 / 11;
         grid-row: 1 / 2;
+        text-align: center;
+        display:flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        a {
+            font-size: 30px;
+            font-weight: bold;
+            margin: 0 20px;
+            color: var(--mode-text2);
+            text-decoration: none;
+            text-align: center;
+            &:hover {
+                color: var(--theme-color)
+            }
+        }
+        img {
+            width: 100px;
+            height: 100%;
+            margin-left:20px
+        }
     }
     .historical {
         grid-column: 1 / 8;
