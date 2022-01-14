@@ -1,4 +1,4 @@
-<div class="header" *ngIf="liveData">
+<div class="header" *ngIf="liveData.length > 0">
     <div class="stock-names">
         <ng-container *ngFor="let data of liveData; index as i">
             <h1 
@@ -12,15 +12,15 @@
         <fa-icon [ngClass]="activeIndex == stockData.length-1 ? 'hide' : ''" (click)="changeIndex(true)" [icon]="faArrowRight"></fa-icon>
     </div>
 </div>
-<div class="main" *ngIf="stockData">
+<div class="main" *ngIf="liveData.length > 0 && stockData.length > 0">
     <div class="live grid-item">
         <h2>${{ liveData[activeIndex].currentValue | number : '1.2-2'}}</h2>
     </div>
     <div class="news grid-item">
-        <div class="image">
+        <div class="image" *ngIf="newsImg">
             <img [src]="newsImg" alt="news_img">
         </div>
-        <div class="headline"><a [href]="newsUrl">{{newsHeadline}}</a></div>
+        <div class="headline" *ngIf="newsUrl"><a [href]="newsUrl">{{newsHeadline}}</a></div>
     </div>
     <div id="historical" class="historical grid-item">
         <div class="inner">
@@ -28,7 +28,7 @@
         </div>
     </div>
     <div class="sidebar grid-item">
-        <div class="content">
+        <div class="content" *ngIf="currentHistoricalData[0]">
             <h3>{{stockData[activeIndex].name}}</h3>
             <div class="item">
                 <h4>Open</h4>
@@ -47,5 +47,12 @@
                 <p>${{currentHistoricalData[0].low | number : '1.2-2'}}</p>
             </div>
         </div>
+    </div>
+</div>
+<div class="default" *ngIf="stockData.length == 0">
+    <div class="nodata">
+        <h1>No Stocks Found</h1>
+        <p>Looking for some stock data? Go over to settings and add a stock</p>
+        <button routerLink="/dashboard/settings">Go to Settings</button>
     </div>
 </div>

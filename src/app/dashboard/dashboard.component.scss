@@ -120,7 +120,8 @@ $tablet: 1100px;
             top: -10px;
             right: 10px;
             width: 180px;
-            background: white !important;
+            background: var(--mode-bg);
+            color: var(--mode-text2);
             height: 130px;
             transition: .15s;
             display: block;
@@ -150,7 +151,6 @@ $tablet: 1100px;
                 justify-content: left;
                 gap: 15px;
                 cursor: pointer;
-                color: grey;
                 fa-icon {
                     padding-left: 10px;
                     font-size: 25px;

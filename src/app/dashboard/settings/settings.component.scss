@@ -44,6 +44,23 @@ h1 {
                 cursor: pointer;
             }
         }
-        .autocomplete { margin-top: 15px; width: 200px; }
+        .autocomplete { 
+            margin-top: 15px; 
+            width: 270px;
+            display: flex;
+            align-items: center;
+            height: 50px;
+            gap: 15px;
+            .input {  }
+            button {
+                padding: 10px;
+                font-size: 20px;
+                color: white;
+                border-radius: 5px;
+                background: var(--theme-color);
+                border: none;
+                &:hover { opacity: .8;}
+            }
+        }
     }   
 }

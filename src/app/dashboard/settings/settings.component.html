@@ -13,14 +13,20 @@
             <p>{{ticker}}</p>
             <fa-icon (click)="deleteTicker(ticker)" [icon]="faMinus"></fa-icon>
          </div>
-         <div class="autocomplete"><p-autoComplete 
-            [(ngModel)]="selectedTicker" 
-            [suggestions]="filteredTickers" 
-            (completeMethod)="filterTickers($event)"
-            [dropdown]="true" 
-            (keyup.enter)="addTicker(selectedTicker)" 
-            inputStyleClass="p-autoComplete"
-            panelStyleClass="p-autoComplete-panel">
-        </p-autoComplete></div>
+         <div class="autocomplete">
+             <div class="input">
+                <p-autoComplete 
+                    [(ngModel)]="selectedTicker" 
+                    [suggestions]="filteredTickers" 
+                    (completeMethod)="filterTickers($event)"
+                    [dropdown]="true" 
+                    (keyup.enter)="addTicker(selectedTicker)" 
+                    inputStyleClass="p-autoComplete"
+                    panelStyleClass="p-autoComplete-panel"
+                >
+                </p-autoComplete>
+             </div>
+            <button (click)="addTicker(selectedTicker)">Add</button>
+    </div>
     </div>
 </div>

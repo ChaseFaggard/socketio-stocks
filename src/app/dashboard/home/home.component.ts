@@ -1,8 +1,8 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, AfterViewInit } from '@angular/core';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { DataObject, HistoricalDataObject, HistoricalStockObject } from 'src/app/Interfaces';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
-import * as Plotly from 'plotly.js-dist-min'; // afdasas
+import * as Plotly from 'plotly.js-dist-min'; 
 import { LoggerService } from 'src/app/services/logger.service';
 import { StockService } from 'src/app/services/stock.service';
 import { ThemeService } from 'src/app/services/theme.service';
@@ -14,7 +14,7 @@ import { NewsService } from 'src/app/services/news.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
   public activeIndex: number = 0;
 
   public faArrowLeft = faArrowLeft
@@ -50,7 +50,9 @@ export class HomeComponent implements OnInit {
     this.stockService.liveData.subscribe((data: DataObject[] | null) => {
       if (data != null) this.liveData = data
     })
+  }
 
+  ngAfterViewInit(): void {
     this.getStockData()
   }
 
@@ -63,8 +65,11 @@ export class HomeComponent implements OnInit {
       this.stockData = await this.stockService.requestHistorical(this.userService.user.value!.tickers)
       this.localService.saveHistorical(this.stockData)
     }
-    await this.getHistorical()
-    await this.getNews()
+    if(this.stockData.length > 0) {
+      await this.getHistorical()
+      await this.getNews()
+    }
+   
   }
 
   public changeIndex(next?:boolean) {
@@ -72,11 +77,14 @@ export class HomeComponent implements OnInit {
       if(next && this.activeIndex < this.stockData.length-1) this.activeIndex++;
       else if(!next && this.activeIndex > 0) this.activeIndex--
     }
-    this.getHistorical()
+    if(this.stockData.length > 0) {
+      this.getHistorical()
+      this.getNews()
+    }
   }
 
   public async getNews() {
-    let news = await this.newsService.newsCall('NBR')
+    let news = await this.newsService.newsCall(this.stockData[this.activeIndex].symbol)
     this.localService.saveNews(news)
     console.log(news)
     this.newsImg = news.newsImg;
@@ -148,7 +156,7 @@ export class HomeComponent implements OnInit {
     this.candlestickConfig = config;
     this.candlestickStyle = style;
 
-    Plotly.newPlot('graph', this.candlestickData, this.candlestickLayout, this.candlestickConfig)
+    setTimeout(() => Plotly.newPlot('graph', this.candlestickData, this.candlestickLayout, this.candlestickConfig), 100)
 
     this.themeService.darkMode.subscribe((darkMode: boolean) => {
       this.candlestickLayout.xaxis.color = darkMode ? 'white' : 'black'
