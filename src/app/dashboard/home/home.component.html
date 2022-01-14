@@ -1,12 +1,15 @@
 <div class="header">
     <div class="stock-names">
-        <h1>{{liveData[activeIndex].symbol}}</h1>
-        <h3>Stock</h3>
-        <h3>Stock</h3>
+        <ng-container *ngFor="let data of liveData; index as i">
+            <h1 
+                [ngClass]="i == activeIndex ? 'active' : ''"
+                (click)="activeIndex = i; changeIndex()"
+            >{{data.symbol}}</h1>
+        </ng-container>
     </div>
     <div class="arrows">
-        <fa-icon (click)="changeIndex(false)" [icon]="faArrowLeft"></fa-icon>
-        <fa-icon (click)="changeIndex(true)" [icon]="faArrowRight"></fa-icon>
+        <fa-icon [ngClass]="activeIndex == 0 ? 'hide' : ''" (click)="changeIndex(false)" [icon]="faArrowLeft"></fa-icon>
+        <fa-icon [ngClass]="activeIndex == stockData.length-1 ? 'hide' : ''" (click)="changeIndex(true)" [icon]="faArrowRight"></fa-icon>
     </div>
 </div>
 <div class="main">
