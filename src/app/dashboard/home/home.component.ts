@@ -67,19 +67,11 @@ export class HomeComponent implements OnInit {
     await this.getNews()
   }
 
-<<<<<<< HEAD
-  public changeIndex(next: boolean) {
-    if (next && this.activeIndex < this.stockData.length - 1) this.activeIndex++;
-    else if (!next && this.activeIndex > 0) this.activeIndex--
-
-    console.log(this.activeIndex)
-=======
   public changeIndex(next?:boolean) {
     if(next != undefined) {
       if(next && this.activeIndex < this.stockData.length-1) this.activeIndex++;
       else if(!next && this.activeIndex > 0) this.activeIndex--
     }
->>>>>>> 65c6719fc9a5bd343c068ed5693d8a025ca59492
     this.getHistorical()
   }
 
