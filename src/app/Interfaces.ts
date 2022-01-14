@@ -29,7 +29,8 @@ export type HistoricalDataObject = {
 }
 
 export type HistoricalStockObject = {
-    symbol: string
+    name: string,
+    symbol: string,
     data: HistoricalDataObject[]
 }
 
