@@ -10,7 +10,7 @@ export class ThemeService {
 
   public darkMode = new BehaviorSubject<boolean>(false)
 
-  public theme = new BehaviorSubject<string>('theme-purple') // Default theme
+  public theme = new BehaviorSubject<string>('') // Default theme
 
   constructor(private userService: UserService) {
     this.userService.user.subscribe((user: User|null) => {

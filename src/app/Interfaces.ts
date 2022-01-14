@@ -35,3 +35,8 @@ export interface HistoricalData {
     'response-type': string,
     data: HistoricalObject[]
 }
+
+export interface ListData {
+    'response-type': string,
+    symbols: string[]
+}

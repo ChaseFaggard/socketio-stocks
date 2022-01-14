@@ -7,7 +7,19 @@
         optionLabel="name" 
         (onChange)="changeInterval(selectedInterval.value)"
     ></p-dropdown>
+    <h4>Current Stocks</h4>
     <div class="tickers">
-        
+        <div class="item" *ngFor="let ticker of userTickers">
+            <p>{{ticker}}</p>
+         </div>
+         <div class="autocomplete"><p-autoComplete 
+            [(ngModel)]="selectedTicker" 
+            [suggestions]="filteredTickers" 
+            (completeMethod)="filterTickers($event)"
+            [dropdown]="true" 
+            (keyup.enter)="addTicker(selectedTicker)" 
+            inputStyleClass="p-autoComplete"
+            panelStyleClass="p-autoComplete-panel">
+        </p-autoComplete></div>
     </div>
 </div>

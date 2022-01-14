@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit} from '@angular/core';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import * as Plotly from 'plotly.js';
-import { DataObject, HistoricalData, HistoricalObject, LiveData } from 'src/app/Interfaces';
+import * as Plotly from 'plotly.js-dist-min'; // afdasas
+import { DataObject, HistoricalObject } from 'src/app/Interfaces';
 import { LoggerService } from 'src/app/services/logger.service';
 import { StockService } from 'src/app/services/stock.service';
 import { ThemeService } from 'src/app/services/theme.service';
@@ -12,7 +12,6 @@ import { ThemeService } from 'src/app/services/theme.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  public theme:string = ''
 
   public faArrowLeft = faArrowLeft
   public faArrowRight = faArrowRight
@@ -20,10 +19,10 @@ export class HomeComponent implements OnInit {
   public liveData: DataObject[] = []
   public historicalData: HistoricalObject[] = []
 
-  candlestickData: object[] = []
-  candlestickLayout: object = {}
-  candlestickConfig: object = {}
-  candlestickStyle: object = {}
+  candlestickData: any[] = []
+  candlestickLayout: any
+  candlestickConfig: any
+  candlestickStyle: any
 
   public selectedLive: DataObject = {
     symbol: '',
@@ -31,8 +30,7 @@ export class HomeComponent implements OnInit {
   }
 
   constructor(private logger: LoggerService, private stockService: StockService, private themeService:ThemeService, private elementRef:ElementRef) {
-    console.log(`Theme: ${this.theme}`)
-    
+
     this.stockService.liveData.subscribe((data: DataObject[] | null) => {
       if (data != null) this.liveData = data
     })
@@ -49,7 +47,7 @@ export class HomeComponent implements OnInit {
     const abc = {
       x: Array.from(this.historicalData.slice(0, 7), item => item.data[0].timestamp.slice(0,10)),
       close: Array.from(this.historicalData.slice(0, 7), item => item.data[0].close),
-      decreasing: { line: { color: this.theme } },
+      decreasing: { line: { color: '#7f7f7f' } },
       high: Array.from(this.historicalData.slice(0, 7), item => item.data[0].high),
       increasing: { line: { color: '#17becf' } },
       line: { color: 'rgba(31,119,180,1)' },
@@ -61,6 +59,7 @@ export class HomeComponent implements OnInit {
     }
     console.log(abc)
     const layout = {
+      height: '400',
       dragmode: 'zoom',
       margin: {
         r: 10,
@@ -73,27 +72,53 @@ export class HomeComponent implements OnInit {
         autorange: true,
         domain: [0, 1],
         range: ['2022-01-06 12:00', '2022-01-12 12:00'],
-        title: 'Date',
+        title: '',
         type: 'date',
+        color: 'white',
         rangeslider: {
           visible:false
-        }
+        },
+        showgrid: false
       },
       yaxis: {
         autorange: true,
         domain: [0, 1],
         range: [2000, 4000],
-        type: 'linear'
-      }
+        type: 'linear',
+        showgrid: false,
+        color: 'white'
+      },
+      paper_bgcolor: 'rgba(0,0,0,0)',
+      plot_bgcolor: 'rgba(0,0,0,0)'
     }
 
     const config = {
-      displayModeBar: false
+      displayModeBar: false,
+      responsive: true
+    }
+
+    const style = {
+      width: '100%',
+      height: '100%'
     }
 
     this.candlestickData = [abc];
     this.candlestickLayout = layout;
     this.candlestickConfig = config;
+    this.candlestickStyle = style;
+
+    Plotly.newPlot('graph', this.candlestickData, this.candlestickLayout, this.candlestickConfig)
+
+    this.themeService.darkMode.subscribe((darkMode: boolean) => {
+      this.candlestickLayout.xaxis.color = darkMode ? 'white' : 'black'
+      this.candlestickLayout.yaxis.color = darkMode ? 'white' : 'black'
+      Plotly.restyle('graph', this.candlestickLayout)
+    })
+
+    this.themeService.theme.subscribe((theme: string) => {
+        this.candlestickData[0].increasing.line.color = getComputedStyle(this.elementRef.nativeElement).getPropertyValue('--theme-color')
+        Plotly.redraw('graph')
+    })
 
   }
 

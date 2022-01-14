@@ -17,7 +17,9 @@
 
     </div>
     <div id="historical" class="historical grid-item">
-        <plotly-plot [data]="candlestickData" [layout]="candlestickLayout" [config] = "candlestickConfig" [style]="{ 'height': '90%' }" ></plotly-plot>
+        <div class="inner">
+            <div id="graph"><!-- Plotly graph is set inside here --></div>
+        </div>
     </div>
     <div class="sidebar grid-item">
         <div class="content">

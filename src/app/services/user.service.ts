@@ -74,6 +74,16 @@ export class UserService {
     this.loggedIn.next(true)
   }
 
+  addTicker = async (ticker: string) => {
+    let tickers: string[] = this.user.value!.tickers
+    tickers.push(ticker)
+    await this.updateUser('tickers', tickers)
+  }
+
+  removeTicker = async (ticker: string) => {
+    
+  }
+
   updateUser = async (key: string, value: any) => {
     if((this.user.value as any)[key] != value) { // Update user if the change is different
       const updatedUser: User = await this.dbService.updateUser(this.user.value!, key, value)
