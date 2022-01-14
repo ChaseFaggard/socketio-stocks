@@ -1,4 +1,4 @@
-<div class="header">
+<div class="header" *ngIf="liveData">
     <div class="stock-names">
         <ng-container *ngFor="let data of liveData; index as i">
             <h1 
@@ -12,7 +12,7 @@
         <fa-icon [ngClass]="activeIndex == stockData.length-1 ? 'hide' : ''" (click)="changeIndex(true)" [icon]="faArrowRight"></fa-icon>
     </div>
 </div>
-<div class="main">
+<div class="main" *ngIf="stockData">
     <div class="live grid-item">
         <h2>${{ liveData[activeIndex].currentValue | number : '1.2-2'}}</h2>
     </div>
