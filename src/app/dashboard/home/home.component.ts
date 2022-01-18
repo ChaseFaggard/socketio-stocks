@@ -102,15 +102,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
         start = 28
         break
       case '3m':
-        start = 84
+        start = 65
         break
       case '6m':
-        start = 168
+        start = 120
         break
       case '1y':
-        start = 364
+        start = 258
         break 
-      default: start = 364
+      default: start = 258
     }
     this.candlestickData[0].x = Array.from(this.currentHistoricalData.slice(this.currentHistoricalData.length - start, this.currentHistoricalData.length), item => item.timestamp.slice(0, 10))
     this.candlestickData[0].close = Array.from(this.currentHistoricalData.slice(this.currentHistoricalData.length - start, this.currentHistoricalData.length), item => item.close)
