@@ -1,4 +1,4 @@
-<div class="header" *ngIf="liveData.length > 0">
+<div class="header" *ngIf="liveData.length > 0" [ngClass]="stockData.length == 0 ? 'hide' : ''">
     <div class="stock-names">
         <ng-container *ngFor="let data of liveData; index as i">
             <h1 
@@ -12,9 +12,10 @@
         <fa-icon [ngClass]="activeIndex == stockData.length-1 ? 'hide' : ''" (click)="changeIndex(true)" [icon]="faArrowRight"></fa-icon>
     </div>
 </div>
-<div class="main" *ngIf="liveData.length > 0 && stockData.length > 0">
+<div class="main" [ngClass]="stockData.length == 0 ? 'hide' : ''">
     <div class="live grid-item">
-        <h2>${{ liveData[activeIndex].currentValue | number : '1.2-2'}}</h2>
+        <h2 *ngIf="liveData.length > 0">${{ liveData[activeIndex].currentValue | number : '1.2-2'}}</h2>
+        <livechart></livechart>
     </div>
     <div class="news grid-item">
         <div class="image" *ngIf="newsImg">
@@ -24,27 +25,34 @@
     </div>
     <div id="historical" class="historical grid-item">
         <div class="inner">
-            <div id="graph"><!-- Plotly graph is set inside here --></div>
+            <div id="graph"></div>
+        </div>
+        <div class="ranges">
+            <button [ngClass]="range == '1y' ? 'active' : ''" (click)="changeRange('1y')">1y</button>
+            <button [ngClass]="range == '6m' ? 'active' : ''" (click)="changeRange('6m')">6m</button>
+            <button [ngClass]="range == '3m' ? 'active' : ''" (click)="changeRange('3m')">3m</button>
+            <button [ngClass]="range == '1m' ? 'active' : ''" (click)="changeRange('1m')">1m</button>
+            <button [ngClass]="range == '1w' ? 'active' : ''" (click)="changeRange('1w')">1w</button>
         </div>
     </div>
     <div class="sidebar grid-item">
-        <div class="content" *ngIf="currentHistoricalData[0]">
-            <h3>{{stockData[activeIndex].name}}</h3>
+        <div class="content">
+            <h3 *ngIf="stockData.length > 0">{{stockData[activeIndex].name}}</h3>
             <div class="item">
                 <h4>Open</h4>
-                <p>${{currentHistoricalData[0].open | number : '1.2-2'}}</p>
+                <p *ngIf="stockData.length > 0">${{currentHistoricalData[currentHistoricalData.length-1].open | number : '1.2-2'}}</p>
             </div>
             <div class="item">
                 <h4>Close</h4>
-                <p>${{currentHistoricalData[0].close | number : '1.2-2'}}</p>
+                <p *ngIf="stockData.length > 0">${{currentHistoricalData[currentHistoricalData.length-1].close | number : '1.2-2'}}</p>
             </div>
             <div class="item">
                 <h4>High</h4>
-                <p>${{currentHistoricalData[0].high | number : '1.2-2'}}</p>
+                <p *ngIf="stockData.length > 0">${{currentHistoricalData[currentHistoricalData.length-1].high | number : '1.2-2'}}</p>
             </div>
             <div class="item">
                 <h4>Low</h4>
-                <p>${{currentHistoricalData[0].low | number : '1.2-2'}}</p>
+                <p *ngIf="stockData.length > 0">${{currentHistoricalData[currentHistoricalData.length-1].low | number : '1.2-2'}}</p>
             </div>
         </div>
     </div>

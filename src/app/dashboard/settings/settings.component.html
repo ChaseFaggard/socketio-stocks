@@ -1,18 +1,27 @@
 <h1>Stock Settings</h1>
 <div class="main">
-    <p>Tick Interval</p>
+    <p>Live Data Interval</p>
     <p-dropdown 
         [options]="intervals" 
         [(ngModel)]="selectedInterval" 
         optionLabel="name" 
         (onChange)="changeInterval(selectedInterval.value)"
     ></p-dropdown>
+    <p>Candlestick Graph Interval</p>
+    <p-dropdown 
+        [options]="candleIntervals" 
+        [(ngModel)]="selectedCandleInterval" 
+        optionLabel="name" 
+        (onChange)="changeCandleInterval(selectedCandleInterval.value)"
+    ></p-dropdown>
     <h4>Current Stocks</h4>
     <div class="tickers">
-        <div class="item" *ngFor="let ticker of userTickers">
-            <p>{{ticker}}</p>
-            <fa-icon (click)="deleteTicker(ticker)" [icon]="faMinus"></fa-icon>
-         </div>
+        <ng-container *ngFor="let ticker of userTickers">
+            <div class="item">
+                <p>{{ticker}}</p>
+                <fa-icon (click)="deleteTicker(ticker)" [icon]="faMinus"></fa-icon>
+           </div>
+        </ng-container>
          <div class="autocomplete">
              <div class="input">
                 <p-autoComplete 

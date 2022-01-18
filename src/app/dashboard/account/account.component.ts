@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { SocialAuthService, SocialUser } from 'angularx-social-login';
-import { DatabaseService } from 'src/app/services/database.service';
 import { ThemeService } from 'src/app/services/theme.service';
 import { User } from 'src/app/Interfaces';
 import { UserService } from 'src/app/services/user.service';
@@ -14,8 +12,6 @@ export class AccountComponent implements OnInit {
 
   public checked: boolean = false
 
-  public socialUser: SocialUser = new SocialUser
-
   public user: User = {
     displayName: '',
     id: '',
@@ -23,6 +19,7 @@ export class AccountComponent implements OnInit {
     theme: '',
     darkMode: false,
     tickInterval: 0,
+    candleInterval: 0,
     tickers: [],
     photoUrl: ''
   }

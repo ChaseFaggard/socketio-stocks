@@ -1,9 +1,8 @@
-import { Component, ElementRef, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { DataObject, HistoricalDataObject, HistoricalStockObject } from 'src/app/Interfaces';
+import { candleData, DataObject, HistoricalDataObject, HistoricalStockObject } from 'src/app/Interfaces';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import * as Plotly from 'plotly.js-dist-min'; 
-import { LoggerService } from 'src/app/services/logger.service';
 import { StockService } from 'src/app/services/stock.service';
 import { ThemeService } from 'src/app/services/theme.service';
 import { UserService } from 'src/app/services/user.service';
@@ -28,7 +27,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
   public newsHeadline: string = '';
   public newsUrl: string = '';
 
-  candlestickData: any[] = []
+  public drawGraph: boolean = true
+
+  public range: string = '1y'
+
+  candlestickData: candleData[] = []
   candlestickLayout: any
   candlestickConfig: any
   candlestickStyle: any
@@ -39,11 +42,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   constructor(
-    private logger: LoggerService,
     private stockService: StockService,
     private newsService: NewsService,
     private themeService: ThemeService,
-    private elementRef: ElementRef,
     private localService: LocalStorageService,
     private userService: UserService) {
 
@@ -56,15 +57,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.getStockData()
   }
 
+  ngOnDestroy(): void { this.drawGraph = false }
+
   ngOnInit(): void { }
 
   public async getStockData() {
-    localStorage.removeItem('historical')
-    if (this.localService.hasHistorical()) this.stockData = this.localService.getHistorical()!
-    else {
-      this.stockData = await this.stockService.requestHistorical(this.userService.user.value!.tickers)
-      this.localService.saveHistorical(this.stockData)
-    }
+    this.stockData = await this.stockService.requestHistorical(this.userService.user.value!.tickers)
+    this.localService.saveHistorical(this.stockData)
     if(this.stockData.length > 0) {
       await this.getHistorical()
       await this.getNews()
@@ -81,29 +80,58 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.getHistorical()
       this.getNews()
     }
+    this.stockService.tickerIndex = this.activeIndex
   }
 
   public async getNews() {
     let news = await this.newsService.newsCall(this.stockData[this.activeIndex].symbol)
     this.localService.saveNews(news)
-    console.log(news)
     this.newsImg = news.newsImg;
     this.newsHeadline = news.newsHeadline;
     this.newsUrl = news.newsUrl;
+  }
+
+  public changeRange(range: string) {
+    this.range = range
+    let start: number = 0
+    switch(range) {
+      case '1w':
+        start = 7
+        break
+      case '1m':
+        start = 28
+        break
+      case '3m':
+        start = 84
+        break
+      case '6m':
+        start = 168
+        break
+      case '1y':
+        start = 364
+        break 
+      default: start = 364
+    }
+    this.candlestickData[0].x = Array.from(this.currentHistoricalData.slice(this.currentHistoricalData.length - start, this.currentHistoricalData.length), item => item.timestamp.slice(0, 10))
+    this.candlestickData[0].close = Array.from(this.currentHistoricalData.slice(this.currentHistoricalData.length - start, this.currentHistoricalData.length), item => item.close)
+    this.candlestickData[0].open = Array.from(this.currentHistoricalData.slice(this.currentHistoricalData.length - start, this.currentHistoricalData.length), item => item.open)
+    this.candlestickData[0].high = Array.from(this.currentHistoricalData.slice(this.currentHistoricalData.length - start, this.currentHistoricalData.length), item => item.high)
+    this.candlestickData[0].low =Array.from(this.currentHistoricalData.slice(this.currentHistoricalData.length - start, this.currentHistoricalData.length), item => item.low)
+    if(this.drawGraph) Plotly.redraw('graph')
   }
 
   public async getHistorical() {
     this.currentHistoricalData = this.stockData[this.activeIndex].data
 
     const abc = {
-      x: Array.from(this.currentHistoricalData.slice((this.currentHistoricalData.length - 7), this.currentHistoricalData.length), item => item.timestamp.slice(0, 10)),
-      close: Array.from(this.currentHistoricalData.slice((this.currentHistoricalData.length - 7), this.currentHistoricalData.length), item => item.close),
+      x: Array.from(this.currentHistoricalData.slice(0, this.currentHistoricalData.length), item => item.timestamp.slice(0, 10)),
+      close: Array.from(this.currentHistoricalData.slice(0, this.currentHistoricalData.length), item => item.close),
       decreasing: { line: { color: '#7f7f7f' } },
-      high: Array.from(this.currentHistoricalData.slice((this.currentHistoricalData.length - 7), this.currentHistoricalData.length), item => item.high),
+      high: Array.from(this.currentHistoricalData.slice(0, this.currentHistoricalData.length), item => item.high),
       increasing: { line: { color: '#17becf' } },
       line: { color: 'rgba(31,119,180,1)' },
-      low: Array.from(this.currentHistoricalData.slice((this.currentHistoricalData.length - 7), this.currentHistoricalData.length), item => item.low),
-      open: Array.from(this.currentHistoricalData.slice((this.currentHistoricalData.length - 7), this.currentHistoricalData.length), item => item.open),
+      low: Array.from(this.currentHistoricalData.slice(0, this.currentHistoricalData.length), item => item.low),
+      open: Array.from(this.currentHistoricalData.slice(0, this.currentHistoricalData.length), item => item.open),
       type: 'candlestick',
       xaxis: 'x',
       yaxis: 'y',
@@ -121,7 +149,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       xaxis: {
         autorange: true,
         domain: [0, 1],
-        range: ['2022-01-06 12:00', '2022-01-12 12:00'],
+        range: ['2021-01-17 12:00', '2022-01-17 12:00'],
         title: '',
         type: 'date',
         color: 'white',
@@ -156,17 +184,18 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.candlestickConfig = config;
     this.candlestickStyle = style;
 
-    setTimeout(() => Plotly.newPlot('graph', this.candlestickData, this.candlestickLayout, this.candlestickConfig), 100)
+    await Plotly.newPlot('graph', this.candlestickData as any, this.candlestickLayout, this.candlestickConfig)
 
     this.themeService.darkMode.subscribe((darkMode: boolean) => {
       this.candlestickLayout.xaxis.color = darkMode ? 'white' : 'black'
       this.candlestickLayout.yaxis.color = darkMode ? 'white' : 'black'
-      Plotly.restyle('graph', this.candlestickLayout)
+      if(this.drawGraph) Plotly.restyle('graph', this.candlestickLayout)
     })
 
     this.themeService.theme.subscribe((theme: string) => {
-      this.candlestickData[0].increasing.line.color = getComputedStyle(this.elementRef.nativeElement).getPropertyValue('--theme-color')
-      Plotly.redraw('graph')
+      const color = this.themeService.colors.find(color => color.theme == theme)!
+      this.candlestickData[0].increasing.line.color = color.color
+      if(this.drawGraph) Plotly.redraw('graph')
     })
 
   }

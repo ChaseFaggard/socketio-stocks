@@ -3,7 +3,6 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../Interfaces';
 import { LoggerService } from './logger.service';
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +18,7 @@ export class DatabaseService {
     }
   }
 
-  constructor(private http:HttpClient, private logger:LoggerService) { 
-    console.log(environment.M3O_KEY)
-  }
+  constructor(private http:HttpClient, private logger:LoggerService) {  }
 
   public accessDatabase() {
     const data = { "table": "stonks" }
@@ -48,6 +45,19 @@ export class DatabaseService {
       this.logger.log(err)
     }
     return users;
+  }
+
+  public getRecord = async (table: string, key: string, value: any): Promise<any> => {
+    const data = {
+      query: `${key} == '${value}'`,
+      table: table
+    }
+    return new Promise((resolve, reject) => {
+      this.http.post(`https://api.m3o.com/v1/db/Read`, data, this.headers).subscribe(
+        (res: any) => resolve(res.records[0]),
+        (err: any) => reject(err)
+      )
+    })
   }
 
   public getUserById = async (id: string): Promise<User> => {
@@ -87,9 +97,27 @@ export class DatabaseService {
     })
   }
 
-  public async checkUser(id:string):Promise<boolean>{
-    const users = await this.getUsers();
-    return users.some(item => item.id == id)
+  public async checkUserByEmail(email: string):Promise<boolean>{
+    const users = await this.getUsers()
+    return users.some(item => item.email == email)
+  }
+
+  public async addLogin(id: string, name: string, email: string, password: string): Promise<User> {
+    const data = {
+      "record" : {
+        id: id,
+        password: password
+      },
+      "table": "stonks-login"
+    }
+    return new Promise((resolve, reject) => {
+      this.http.post(`https://api.m3o.com/v1/db/Create`, data, this.headers).subscribe(
+        (res) => {
+          resolve(this.generateUser(id, name, email, ''))
+        },
+        (err) => reject(err)
+      )
+    })
   }
   
   public async generateUser(id: string, name:string, email:string,  photoUrl: string): Promise<User> {
@@ -100,6 +128,7 @@ export class DatabaseService {
       theme: 'theme-purple',
       darkMode: false,
       tickInterval: 1,
+      candleInterval: 10,
       tickers: [],
       photoUrl: photoUrl
     }
@@ -110,7 +139,6 @@ export class DatabaseService {
     return new Promise((resolve, reject) => {
       this.http.post(`https://api.m3o.com/v1/db/Create`, data, this.headers).subscribe(
         (res) => {
-          console.log(res)
           resolve(newUser)
         }, (err) => {
           reject(err);

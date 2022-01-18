@@ -1,3 +1,5 @@
+$tablet: 1100px;
+
 .header {
     margin: 20px 0 10px 0;
     display: flex;
@@ -49,9 +51,9 @@
         grid-row: 1 / 2;
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: space-evenly;
         h2 {
-            font-size: 40px;
+            font-size: 25px;
             color: var(--mode-text2);
             font-weight: 200;
         }
@@ -71,9 +73,7 @@
             text-align: left;
             padding: 15px;
             box-shadow: 0 0 2px rgb(207, 206, 206);
-            width: 100%;
-            max-width: 400px;
-            min-width: 200px;
+            width: 20em;
             a {
                 font-size: 18px;
                 font-weight: normal;
@@ -85,9 +85,10 @@
             }
         }
         img {
-            width: 180px;
+            width: 150px;
             height: auto;
-            margin-left:20px
+            margin-left:20px;
+            padding: 10px;
         }
     }
     .historical {
@@ -97,7 +98,29 @@
         .inner {
             width: 90%;
             height: 50%;
-            margin: auto;
+            margin: auto 8% auto 2%;
+        }
+        .ranges {
+            position: absolute;
+            top: 8px;
+            right: 30px;
+            display: flex;
+            flex-direction: row-reverse;
+            button {
+                background: none;
+                font-size: 17px;
+                border: none;
+                height: 25px;
+                color: var(--mode-text2);
+                cursor: pointer;
+                &:hover {
+                    background: none;
+                    color: var(--mode-text);
+                }
+                &.active {
+                    color: var(--theme-color);
+                }
+            }
         }
     }
     .sidebar {
@@ -106,8 +129,7 @@
         .content {
             width: 70%;
             height: 90%;
-            margin: auto;
-            margin-top: 5%;
+            margin: 5% auto;
             h3 { font-size: 25px; margin-bottom: 5px; color: var(--mode-text2); }
             .item {
                 height: 40px;
@@ -118,6 +140,21 @@
                 p { font-weight: bold; color: var(--mode-text); }
             }
         }
+    }
+    @media screen and (max-width: $tablet) {
+        margin: auto;
+        background:var(--mode-bg2);
+        width: 100%;
+        margin-top: 50px;
+        padding: 50px 0;
+        justify-content: center;
+        height: auto;
+        grid-template-rows: 1fr;
+        .grid-item { width: 90%; margin: auto; }
+        .live { grid-row: 1 / 2; grid-column: 1 / 11; }
+        .historical { grid-row: 2 / 3; grid-column: 1 / 11; }
+        .news { grid-row: 3 / 4; grid-column: 1 / 11; }
+        .sidebar { grid-row: 4 / 5; grid-column: 1 / 11; }
     }
 }
 

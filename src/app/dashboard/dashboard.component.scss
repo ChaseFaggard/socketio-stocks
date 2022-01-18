@@ -25,9 +25,13 @@ $tablet: 1100px;
         display: flex;
         justify-content: center;
         align-items: center;
+        gap: 15px;
+        margin-left: -5px;
+        fa-icon {
+            font-size: 25px;
+            color: var(--theme-color);
+        }
         h1 {
-            width: 70%;
-            padding-left: 15px;
             padding: 10px;
             color: var(--theme-color);
         }
@@ -79,7 +83,7 @@ $tablet: 1100px;
             }
             h1 {
                 color: white;
-                margin-left: 55px;
+                margin-left: 30px;
             }
         }
     }
@@ -208,7 +212,9 @@ $tablet: 1100px;
                 h3 { display: none; }
             }
         }
+        .title {
+            h1 { display: none; }
+            fa-icon { font-size: 30px; }
+        }
     }
 }
-
-.hide { display: none !important; }

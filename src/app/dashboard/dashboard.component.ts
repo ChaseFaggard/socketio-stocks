@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { faHome, faUserCircle, faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faUserCircle, faCog, faSignOutAlt, faChartArea } from '@fortawesome/free-solid-svg-icons';
 import { faBell } from '@fortawesome/free-regular-svg-icons';
-import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { ThemeService } from '../services/theme.service';
-import { DatabaseService } from '../services/database.service';
 import { UserService } from '../services/user.service';
 import { User } from '../Interfaces';
 import { StockService } from '../services/stock.service';
@@ -26,6 +24,7 @@ export class DashboardComponent implements OnInit {
   public faCog = faCog
   public faBell = faBell
   public faSignOutAlt = faSignOutAlt
+  public faChartArea = faChartArea
 
   public accountPopup:boolean = false
 

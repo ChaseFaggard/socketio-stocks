@@ -2,7 +2,7 @@ h1 {
     width: 90%;
     margin: 0 auto 20px auto;
     color: white;
-    font-size: 40px;
+    font-size: 25px;
 }
 
 .main {
@@ -14,9 +14,10 @@ h1 {
     background: var(--mode-bg);
     color: grey; 
     p { 
-        font-size: 13px; 
-        margin: 0 0 3px 0;
+        font-size: 16px; 
+        margin: 0 0 6px 3px;
         color: var(--mode-text2);
+        &:last-of-type { margin-top: 25px; }
     }
     h4 {
         font-weight: normal;
@@ -28,16 +29,26 @@ h1 {
         width: 100px;
         .item {
             margin: auto;
-            width: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: left;
+            width: 150px;
+            position: relative;
             gap: 20px;
+            padding: 5px 10px;
+            border-radius: 10px;
             &:hover {
                 fa-icon { display: inherit; }
+                background: var(--mode-bg2);
             }
-            p { font-size: 23px; color: var(--mode-text2); }
+            p { 
+                font-size: 23px; 
+                color: var(--mode-text2);
+                margin: 0; 
+                padding: 0; 
+            }
             fa-icon {
+                position: absolute;
+                right: 5px;
+                top: 50%;
+                transform: translateY(-50%);
                 display: none;
                 font-size: 15px;
                 color: red;

@@ -25,6 +25,7 @@ import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-logi
 import { GoogleLoginProvider } from 'angularx-social-login';
 import { LoginGuard } from './loginactivate.guard';
 import { TrackFocusDirective } from './trackfocus.directive';
+import { LiveChartComponent } from './dashboard/home/livechart/livechart.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -37,7 +38,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     HomeComponent,
     AccountComponent,
     SettingsComponent,
-    TrackFocusDirective
+    TrackFocusDirective,
+    LiveChartComponent
   ],
   imports: [
     BrowserModule,

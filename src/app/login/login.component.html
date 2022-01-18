@@ -1,28 +1,61 @@
-<div class="form-container">
+<div class="form-container" *ngIf="displayLogin">
     <div class="form-wrap">
         <h1>Sign In</h1>
         <button class="google" type="button" (click)="loginWithGoogle()"><fa-icon [icon]="faGoogle"></fa-icon><p>Sign in with Google</p></button>
-        <form id="login-form" autocomplete="off">
+        <form id="login-form" autocomplete="off" [formGroup]="loginForm" (ngSubmit)="login()">
             <div class="form-group">
                 <label for="email">Email</label>
                 <div class="input">
                     <fa-icon [icon]="faEnvelope"></fa-icon>
-                    <input type="email" name="email" id="email" required />
-                </div>
-               
+                    <input formControlName="email" type="email" name="email" id="email" required />
+                </div>  
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
                 <div class="input">
                     <fa-icon [icon]="faKey"></fa-icon>
-                    <input type="password" name="password" id="password" required />
+                    <input formControlName="password" type="password" name="password" id="password" required />
                 </div>
             </div>
-            <button type="submit" class="btn">Sign in</button>
+            <button [disabled]="!loginForm.valid" type="submit" class="btn">Sign in</button>
         </form>
     </div>
     <footer>
-        <p>Don't have an account? <a id="signup" href="#">Signup Here</a></p>
+        <p>Don't have an account? <a id="signup" (click)="displayLogin = false">Sign up here</a></p>
+    </footer>
+    <div class="msg error" id="login-errorMsg"></div>
+    <div class="msg success" id="login-successMsg"></div>
+</div>
+<div class="form-container" *ngIf="!displayLogin">
+    <div class="form-wrap">
+        <h1>Sign Up</h1>
+        <form id="signup-form" autocomplete="off" [formGroup]="signupForm" (ngSubmit)="signup()">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <div class="input">
+                    <fa-icon [icon]="faSignature"></fa-icon>
+                    <input formControlName="name" type="text" name="name" id="name" required />
+                </div>  
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <div class="input">
+                    <fa-icon [icon]="faEnvelope"></fa-icon>
+                    <input formControlName="email" type="email" name="email" id="email" required />
+                </div>  
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input">
+                    <fa-icon [icon]="faKey"></fa-icon>
+                    <input formControlName="password" type="password" name="password" id="password" required />
+                </div>
+            </div>
+            <button [disabled]="!signupForm.valid" type="submit" class="btn">Sign up</button>
+        </form>
+    </div>
+    <footer>
+        <p>Already have an account? <a id="signin" (click)="displayLogin = true">Sign in here</a></p>
     </footer>
     <div class="msg error" id="login-errorMsg"></div>
     <div class="msg success" id="login-successMsg"></div>

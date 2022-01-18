@@ -53,9 +53,18 @@
 .theme-blue { --theme-color-rgb: var(--blue); --theme-color: rgb(var(--theme-color-rgb)); --theme-color-light: rgba(var(--theme-color-rgb), 0.15); }
 .theme-yellow { --theme-color-rgb: var(--yellow); --theme-color: rgb(var(--theme-color-rgb)); --theme-color-light: rgba(var(--theme-color-rgb), 0.15); }
 
+
+html {
+    position: relative;
+    height: 100%;
+}
+
 body {
     font-family: 'Poppins', sans-serif;
+    height: 100%;
 }
+
+.hide { display: none !important; }
 
 /* PrimeNG Dropdown styles */
 .p-dropdown-items {

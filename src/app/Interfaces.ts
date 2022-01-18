@@ -6,6 +6,7 @@ export interface User {
     theme: string,
     darkMode: boolean,
     tickInterval: number,
+    candleInterval: number,
     tickers: string[]
     //This is where we're going to put notif stuff, but we need to figure out how to organize that first
 }
@@ -49,4 +50,25 @@ export interface NewsData {
     newsUrl: string,
     newsHeadline: string,
     newsImg: string
+}
+
+export interface candlestick {
+    open: number
+    high: number
+    low: number
+    close: number
+}
+
+export interface candleData {
+    x: string[],
+    close: number[],
+    decreasing: any,
+    high: number[],
+    increasing: any,
+    line: any,
+    low: number[],
+    open: number[],
+    type: string,
+    xaxis: string,
+    yaxis: string
 }

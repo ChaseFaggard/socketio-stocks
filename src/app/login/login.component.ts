@@ -2,11 +2,9 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { User } from '../Interfaces';
-import { LoggerService } from '../services/logger.service';
 import { UserService } from '../services/user.service';
-import { faKey, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faKey, faEnvelope, faSignature } from '@fortawesome/free-solid-svg-icons';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 
 @Component({
@@ -16,21 +14,39 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 })
 export class LoginComponent implements OnInit {
 
-  loginForm: FormGroup|null = null;
-  socialUser: SocialUser = new SocialUser;
-  isLoggedin: boolean = false;  
+  public loginForm: FormGroup
+  public signupForm: FormGroup
+  public isLoggedin: boolean = false
+  public displayLogin = true
 
   public faKey = faKey
   public faEnvelope = faEnvelope
   public faGoogle = faGoogle
+  public faSignature = faSignature
+
+  public loginEmail: string = ''
+  public loginPassword: string = ''
+
+  public signupName: string = ''
+  public signupPassword: string = ''
+  public signupEmail: string = ''
   
   constructor(
     private formBuilder: FormBuilder, 
-    private socialAuthService: SocialAuthService,
     private router: Router,
-    private logger: LoggerService,
     private userService: UserService
   ) { 
+    this.loginForm = this.formBuilder.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required]
+    })
+    this.signupForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required]
+    })
+
+
     const subscription = this.userService.user.subscribe((user: User|null) => {
       console.log(`User: ${JSON.stringify(user)}`)
       if(user != null) {
@@ -40,22 +56,27 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  ngOnInit() {
-    this.loginForm = this.formBuilder.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required]
-    });   
-  }
+  ngOnInit() { }
 
-  loginWithGoogle = async () => {
+  loginWithGoogle = async () => await this.userService.loginGoogle()
 
-    const user: User = await this.userService.loginGoogle()
-    
-    if(user) this.router.navigate(['dashboard/home'])
 
-  }
 
   login = async () => {
+    const form = this.loginForm.value
+    await this.userService.login(form.email, form.password)
+  }
+
+  signup = async () => {
+    const form = this.signupForm.value
+    await this.userService.createUser(form.name, form.email, form.password)
+  }
+
+  checkLoginErrors = (): void => {
+
+  }
+
+  checkSignupErrors = (): void => {
 
   }
 

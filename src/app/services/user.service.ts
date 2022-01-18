@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { User } from '../Interfaces';
 import { DatabaseService } from './database.service';
 import { LocalStorageService } from './local-storage.service';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable({
   providedIn: 'root'
@@ -70,8 +71,32 @@ export class UserService {
     return this.user.value!
   }
 
-  login = (): void => {
+  login = async (email: string, password: string) => {
+    const user: User = await this.dbService.getRecord('stonks', 'email', email)
+    if(user) {
+      const loginInfo = await this.dbService.getRecord('stonks-login', 'id', user.id)
+      if(loginInfo && bcrypt.compareSync(password, loginInfo.password)) {
+        this.user.next(user)
+        this.loggedIn.next(true)
+      }
+    }
+
+  }
+
+
+  createUser = async (name: string, email: string, password: string): Promise<User|null> => {
     this.loggedIn.next(true)
+    if((await this.dbService.checkUserByEmail(email)) == false) {
+      const id = Math.random().toString(36).substring(2, 11)
+      const salt = bcrypt.genSaltSync(10);
+      const pass = bcrypt.hashSync(password, salt);
+      const user = await this.dbService.addLogin(id, name, email, pass)
+      if(user) {
+        this.user.next(user)
+        return user
+      }
+    }
+    return null
   }
 
   addTicker = async (ticker: string) => {

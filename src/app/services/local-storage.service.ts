@@ -32,7 +32,6 @@ export class LocalStorageService {
   // Checks if a user exist in local storage
   hasUser = (): boolean => this.has('user')
 
-
   //Take allll of the pieces that check for a user, and just replace it with historical data! ez pz
   saveHistorical = (data: HistoricalStockObject[]): void => { this.save('historical', JSON.stringify(data)) }
 
