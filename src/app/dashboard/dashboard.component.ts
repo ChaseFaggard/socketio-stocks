@@ -19,6 +19,7 @@ export class DashboardComponent implements OnInit {
   public darkMode: boolean = false
   public theme: string = 'theme-purple'
 
+  //suggestion: variables seem unnecessary
   public faHome = faHome
   public faUserCircle = faUserCircle
   public faCog = faCog

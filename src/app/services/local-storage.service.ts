@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HistoricalData, HistoricalStockObject, NewsData, User } from '../Interfaces';
+import { HistoricalStockObject, NewsData, User } from '../Interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +31,7 @@ export class LocalStorageService {
 
   // Checks if a user exist in local storage
   hasUser = (): boolean => this.has('user')
-
+  
   //Take allll of the pieces that check for a user, and just replace it with historical data! ez pz
   saveHistorical = (data: HistoricalStockObject[]): void => { this.save('historical', JSON.stringify(data)) }
 
@@ -42,7 +42,7 @@ export class LocalStorageService {
     if (data) return JSON.parse(data)
     return null
   }
-
+//suggestion: too many ll in all
   //Take alllll of the pieces for check a user, add a parameter for what ticker we're saving data for, and bam! ez pz gg no re
   saveNews = (tickerNews: NewsData): void => { this.save(`${tickerNews.ticker}-news`, JSON.stringify(tickerNews)) }
 
